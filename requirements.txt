@@ -10,3 +10,4 @@ langchain-core
 streamlit
 asyncio
 langchain-google-genai
+pysqlite3-binary
