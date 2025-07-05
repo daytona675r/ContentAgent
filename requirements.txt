@@ -1,0 +1,12 @@
+langgraph
+langchain
+openai
+chromadb
+tiktoken
+langchain-community
+python-dotenv
+langchain-openai
+langchain-core
+streamlit
+asyncio
+langchain-google-genai
