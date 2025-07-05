@@ -3,7 +3,7 @@
 import requests
 import streamlit as st
 
-from src.agent.graph import graph  # <- this is your LangGraph workflow
+from src.agent.graph import graph
 from langgraph.graph import StateGraph
 from typing import TypedDict, List
 from tools.trending import get_trending_topics
