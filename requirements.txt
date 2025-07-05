@@ -11,3 +11,4 @@ langchain-openai
 langchain-core
 asyncio
 langchain-google-genai
+protobuf~=3.19.0
