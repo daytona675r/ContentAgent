@@ -1,3 +1,5 @@
+streamlit
+pysqlite3-binary
 langgraph
 langchain
 openai
@@ -7,7 +9,5 @@ langchain-community
 python-dotenv
 langchain-openai
 langchain-core
-streamlit
 asyncio
 langchain-google-genai
-pysqlite3-binary
