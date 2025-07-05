@@ -1,0 +1,27 @@
+[project]
+name = "ContentAgent"
+version = "0.1.0"
+description = ""
+authors = []
+dependencies = [
+    "langgraph",
+    "langchain",
+    "openai",
+    "chromadb",
+    "tiktoken",
+    "langchain-community",
+    "python-dotenv",
+    "langchain-openai",
+    "langchain-core",
+    "dataclasses; python_version<'3.7'",
+    "streamlit",
+    "asyncio",
+    "langchain-google-genai",
+]
+
+[project.optional-dependencies]
+google-genai = ["langchain-google-genai"]
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"

@@ -1,0 +1,1502 @@
+[
+  {
+    "tweet_id": "001",
+    "text": "Why most solopreneur tactics ideas fail (and what to do instead)",
+    "theme": "Solopreneur Tactics",
+    "date": "2025-02-24",
+    "engagement": {
+      "likes": 26,
+      "retweets": 4,
+      "replies": 9,
+      "impressions": 978
+    },
+    "tone": "motivational",
+    "style": "listicle",
+    "time_posted": "21:45"
+  },
+  {
+    "tweet_id": "002",
+    "text": "The solopreneur's roadmap for launching with AI",
+    "theme": "AI Productivity",
+    "date": "2025-04-06",
+    "engagement": {
+      "likes": 27,
+      "retweets": 13,
+      "replies": 9,
+      "impressions": 812
+    },
+    "tone": "professional",
+    "style": "listicle",
+    "time_posted": "14:15"
+  },
+  {
+    "tweet_id": "003",
+    "text": "A quick breakdown of prompt engineering success",
+    "theme": "Prompt Engineering",
+    "date": "2025-04-07",
+    "engagement": {
+      "likes": 34,
+      "retweets": 8,
+      "replies": 8,
+      "impressions": 1156
+    },
+    "tone": "professional",
+    "style": "thread",
+    "time_posted": "21:00"
+  },
+  {
+    "tweet_id": "004",
+    "text": "The solopreneur's roadmap for launching with AI",
+    "theme": "No-Code AI",
+    "date": "2025-06-15",
+    "engagement": {
+      "likes": 35,
+      "retweets": 25,
+      "replies": 10,
+      "impressions": 1018
+    },
+    "tone": "casual",
+    "style": "one-liner",
+    "time_posted": "15:15"
+  },
+  {
+    "tweet_id": "005",
+    "text": "A quick breakdown of startup building success",
+    "theme": "Startup Building",
+    "date": "2025-04-05",
+    "engagement": {
+      "likes": 97,
+      "retweets": 9,
+      "replies": 7,
+      "impressions": 2877
+    },
+    "tone": "casual",
+    "style": "one-liner",
+    "time_posted": "12:45"
+  },
+  {
+    "tweet_id": "006",
+    "text": "The solopreneur's roadmap for launching with AI",
+    "theme": "Startup Building",
+    "date": "2025-05-03",
+    "engagement": {
+      "likes": 31,
+      "retweets": 17,
+      "replies": 10,
+      "impressions": 946
+    },
+    "tone": "casual",
+    "style": "one-liner",
+    "time_posted": "9:30"
+  },
+  {
+    "tweet_id": "007",
+    "text": "AI isn\u2019t enough: solopreneur tactics needs this too",
+    "theme": "Solopreneur Tactics",
+    "date": "2025-04-09",
+    "engagement": {
+      "likes": 31,
+      "retweets": 10,
+      "replies": 9,
+      "impressions": 1068
+    },
+    "tone": "casual",
+    "style": "listicle",
+    "time_posted": "20:45"
+  },
+  {
+    "tweet_id": "008",
+    "text": "The solopreneur's roadmap for launching with AI",
+    "theme": "Prompt Engineering",
+    "date": "2025-05-18",
+    "engagement": {
+      "likes": 45,
+      "retweets": 23,
+      "replies": 0,
+      "impressions": 1357
+    },
+    "tone": "casual",
+    "style": "one-liner",
+    "time_posted": "21:00"
+  },
+  {
+    "tweet_id": "009",
+    "text": "The solopreneur's roadmap for launching with AI",
+    "theme": "No-Code AI",
+    "date": "2025-05-15",
+    "engagement": {
+      "likes": 31,
+      "retweets": 19,
+      "replies": 7,
+      "impressions": 1086
+    },
+    "tone": "professional",
+    "style": "thread",
+    "time_posted": "8:45"
+  },
+  {
+    "tweet_id": "010",
+    "text": "Why most no-code ai ideas fail (and what to do instead)",
+    "theme": "No-Code AI",
+    "date": "2025-03-09",
+    "engagement": {
+      "likes": 71,
+      "retweets": 14,
+      "replies": 2,
+      "impressions": 2279
+    },
+    "tone": "professional",
+    "style": "listicle",
+    "time_posted": "19:00"
+  },
+  {
+    "tweet_id": "011",
+    "text": "Why most startup building ideas fail (and what to do instead)",
+    "theme": "Startup Building",
+    "date": "2025-02-07",
+    "engagement": {
+      "likes": 89,
+      "retweets": 25,
+      "replies": 6,
+      "impressions": 2776
+    },
+    "tone": "motivational",
+    "style": "case study",
+    "time_posted": "21:15"
+  },
+  {
+    "tweet_id": "012",
+    "text": "3 lessons I learned from building an AI-first tool",
+    "theme": "AI Productivity",
+    "date": "2025-04-27",
+    "engagement": {
+      "likes": 38,
+      "retweets": 9,
+      "replies": 4,
+      "impressions": 1328
+    },
+    "tone": "casual",
+    "style": "thread",
+    "time_posted": "17:30"
+  },
+  {
+    "tweet_id": "013",
+    "text": "Why most no-code ai ideas fail (and what to do instead)",
+    "theme": "No-Code AI",
+    "date": "2025-03-20",
+    "engagement": {
+      "likes": 75,
+      "retweets": 24,
+      "replies": 2,
+      "impressions": 2362
+    },
+    "tone": "insightful",
+    "style": "one-liner",
+    "time_posted": "22:15"
+  },
+  {
+    "tweet_id": "014",
+    "text": "3 lessons I learned from building an AI-first tool",
+    "theme": "Startup Building",
+    "date": "2025-04-23",
+    "engagement": {
+      "likes": 73,
+      "retweets": 21,
+      "replies": 0,
+      "impressions": 2360
+    },
+    "tone": "insightful",
+    "style": "thread",
+    "time_posted": "16:30"
+  },
+  {
+    "tweet_id": "015",
+    "text": "Why most startup building ideas fail (and what to do instead)",
+    "theme": "Startup Building",
+    "date": "2025-04-23",
+    "engagement": {
+      "likes": 12,
+      "retweets": 19,
+      "replies": 7,
+      "impressions": 280
+    },
+    "tone": "insightful",
+    "style": "thread",
+    "time_posted": "21:45"
+  },
+  {
+    "tweet_id": "016",
+    "text": "The solopreneur's roadmap for launching with AI",
+    "theme": "No-Code AI",
+    "date": "2025-05-10",
+    "engagement": {
+      "likes": 23,
+      "retweets": 13,
+      "replies": 0,
+      "impressions": 867
+    },
+    "tone": "professional",
+    "style": "listicle",
+    "time_posted": "19:30"
+  },
+  {
+    "tweet_id": "017",
+    "text": "The solopreneur's roadmap for launching with AI",
+    "theme": "AI Productivity",
+    "date": "2025-02-06",
+    "engagement": {
+      "likes": 94,
+      "retweets": 1,
+      "replies": 0,
+      "impressions": 2768
+    },
+    "tone": "motivational",
+    "style": "one-liner",
+    "time_posted": "14:00"
+  },
+  {
+    "tweet_id": "018",
+    "text": "3 lessons I learned from building an AI-first tool",
+    "theme": "AI Productivity",
+    "date": "2025-07-03",
+    "engagement": {
+      "likes": 39,
+      "retweets": 6,
+      "replies": 3,
+      "impressions": 1333
+    },
+    "tone": "motivational",
+    "style": "one-liner",
+    "time_posted": "8:00"
+  },
+  {
+    "tweet_id": "019",
+    "text": "Why most no-code ai ideas fail (and what to do instead)",
+    "theme": "No-Code AI",
+    "date": "2025-04-07",
+    "engagement": {
+      "likes": 47,
+      "retweets": 11,
+      "replies": 10,
+      "impressions": 1487
+    },
+    "tone": "insightful",
+    "style": "one-liner",
+    "time_posted": "17:15"
+  },
+  {
+    "tweet_id": "020",
+    "text": "The solopreneur's roadmap for launching with AI",
+    "theme": "Startup Building",
+    "date": "2025-04-12",
+    "engagement": {
+      "likes": 54,
+      "retweets": 18,
+      "replies": 7,
+      "impressions": 1708
+    },
+    "tone": "insightful",
+    "style": "one-liner",
+    "time_posted": "7:00"
+  },
+  {
+    "tweet_id": "021",
+    "text": "Why most prompt engineering ideas fail (and what to do instead)",
+    "theme": "Prompt Engineering",
+    "date": "2025-02-15",
+    "engagement": {
+      "likes": 45,
+      "retweets": 8,
+      "replies": 8,
+      "impressions": 1479
+    },
+    "tone": "casual",
+    "style": "case study",
+    "time_posted": "18:15"
+  },
+  {
+    "tweet_id": "022",
+    "text": "The solopreneur's roadmap for launching with AI",
+    "theme": "Solopreneur Tactics",
+    "date": "2025-02-03",
+    "engagement": {
+      "likes": 35,
+      "retweets": 19,
+      "replies": 9,
+      "impressions": 999
+    },
+    "tone": "professional",
+    "style": "case study",
+    "time_posted": "22:00"
+  },
+  {
+    "tweet_id": "023",
+    "text": "3 lessons I learned from building an AI-first tool",
+    "theme": "No-Code AI",
+    "date": "2025-03-18",
+    "engagement": {
+      "likes": 34,
+      "retweets": 7,
+      "replies": 1,
+      "impressions": 989
+    },
+    "tone": "motivational",
+    "style": "one-liner",
+    "time_posted": "20:00"
+  },
+  {
+    "tweet_id": "024",
+    "text": "Why most solopreneur tactics ideas fail (and what to do instead)",
+    "theme": "Solopreneur Tactics",
+    "date": "2025-05-16",
+    "engagement": {
+      "likes": 99,
+      "retweets": 3,
+      "replies": 1,
+      "impressions": 2989
+    },
+    "tone": "insightful",
+    "style": "one-liner",
+    "time_posted": "14:15"
+  },
+  {
+    "tweet_id": "025",
+    "text": "The solopreneur's roadmap for launching with AI",
+    "theme": "Prompt Engineering",
+    "date": "2025-02-25",
+    "engagement": {
+      "likes": 64,
+      "retweets": 8,
+      "replies": 6,
+      "impressions": 2110
+    },
+    "tone": "insightful",
+    "style": "case study",
+    "time_posted": "12:45"
+  },
+  {
+    "tweet_id": "026",
+    "text": "3 lessons I learned from building an AI-first tool",
+    "theme": "Startup Building",
+    "date": "2025-03-18",
+    "engagement": {
+      "likes": 85,
+      "retweets": 4,
+      "replies": 8,
+      "impressions": 2632
+    },
+    "tone": "casual",
+    "style": "case study",
+    "time_posted": "7:30"
+  },
+  {
+    "tweet_id": "027",
+    "text": "A quick breakdown of prompt engineering success",
+    "theme": "Prompt Engineering",
+    "date": "2025-04-24",
+    "engagement": {
+      "likes": 76,
+      "retweets": 3,
+      "replies": 10,
+      "impressions": 2330
+    },
+    "tone": "professional",
+    "style": "thread",
+    "time_posted": "11:30"
+  },
+  {
+    "tweet_id": "028",
+    "text": "AI isn\u2019t enough: prompt engineering needs this too",
+    "theme": "Prompt Engineering",
+    "date": "2025-06-11",
+    "engagement": {
+      "likes": 37,
+      "retweets": 10,
+      "replies": 9,
+      "impressions": 1056
+    },
+    "tone": "professional",
+    "style": "listicle",
+    "time_posted": "19:00"
+  },
+  {
+    "tweet_id": "029",
+    "text": "Why most startup building ideas fail (and what to do instead)",
+    "theme": "Startup Building",
+    "date": "2025-05-05",
+    "engagement": {
+      "likes": 68,
+      "retweets": 7,
+      "replies": 2,
+      "impressions": 2081
+    },
+    "tone": "casual",
+    "style": "case study",
+    "time_posted": "7:30"
+  },
+  {
+    "tweet_id": "030",
+    "text": "AI isn\u2019t enough: startup building needs this too",
+    "theme": "Startup Building",
+    "date": "2025-04-06",
+    "engagement": {
+      "likes": 84,
+      "retweets": 23,
+      "replies": 7,
+      "impressions": 2558
+    },
+    "tone": "motivational",
+    "style": "one-liner",
+    "time_posted": "17:00"
+  },
+  {
+    "tweet_id": "031",
+    "text": "AI isn\u2019t enough: solopreneur tactics needs this too",
+    "theme": "Solopreneur Tactics",
+    "date": "2025-06-04",
+    "engagement": {
+      "likes": 100,
+      "retweets": 25,
+      "replies": 2,
+      "impressions": 3092
+    },
+    "tone": "insightful",
+    "style": "thread",
+    "time_posted": "19:30"
+  },
+  {
+    "tweet_id": "032",
+    "text": "AI isn\u2019t enough: prompt engineering needs this too",
+    "theme": "Prompt Engineering",
+    "date": "2025-04-27",
+    "engagement": {
+      "likes": 24,
+      "retweets": 19,
+      "replies": 5,
+      "impressions": 828
+    },
+    "tone": "casual",
+    "style": "one-liner",
+    "time_posted": "22:30"
+  },
+  {
+    "tweet_id": "033",
+    "text": "AI isn\u2019t enough: no-code ai needs this too",
+    "theme": "No-Code AI",
+    "date": "2025-06-21",
+    "engagement": {
+      "likes": 21,
+      "retweets": 14,
+      "replies": 0,
+      "impressions": 644
+    },
+    "tone": "motivational",
+    "style": "thread",
+    "time_posted": "16:45"
+  },
+  {
+    "tweet_id": "034",
+    "text": "A quick breakdown of solopreneur tactics success",
+    "theme": "Solopreneur Tactics",
+    "date": "2025-04-13",
+    "engagement": {
+      "likes": 28,
+      "retweets": 24,
+      "replies": 9,
+      "impressions": 963
+    },
+    "tone": "insightful",
+    "style": "listicle",
+    "time_posted": "7:15"
+  },
+  {
+    "tweet_id": "035",
+    "text": "AI isn\u2019t enough: prompt engineering needs this too",
+    "theme": "Prompt Engineering",
+    "date": "2025-06-23",
+    "engagement": {
+      "likes": 89,
+      "retweets": 19,
+      "replies": 7,
+      "impressions": 2771
+    },
+    "tone": "professional",
+    "style": "thread",
+    "time_posted": "8:15"
+  },
+  {
+    "tweet_id": "036",
+    "text": "Why most no-code ai ideas fail (and what to do instead)",
+    "theme": "No-Code AI",
+    "date": "2025-03-16",
+    "engagement": {
+      "likes": 59,
+      "retweets": 19,
+      "replies": 0,
+      "impressions": 1902
+    },
+    "tone": "motivational",
+    "style": "one-liner",
+    "time_posted": "20:30"
+  },
+  {
+    "tweet_id": "037",
+    "text": "3 lessons I learned from building an AI-first tool",
+    "theme": "Startup Building",
+    "date": "2025-04-20",
+    "engagement": {
+      "likes": 82,
+      "retweets": 21,
+      "replies": 5,
+      "impressions": 2542
+    },
+    "tone": "professional",
+    "style": "listicle",
+    "time_posted": "22:45"
+  },
+  {
+    "tweet_id": "038",
+    "text": "AI isn\u2019t enough: solopreneur tactics needs this too",
+    "theme": "Solopreneur Tactics",
+    "date": "2025-03-28",
+    "engagement": {
+      "likes": 22,
+      "retweets": 13,
+      "replies": 1,
+      "impressions": 828
+    },
+    "tone": "motivational",
+    "style": "listicle",
+    "time_posted": "22:00"
+  },
+  {
+    "tweet_id": "039",
+    "text": "The solopreneur's roadmap for launching with AI",
+    "theme": "AI Productivity",
+    "date": "2025-05-25",
+    "engagement": {
+      "likes": 90,
+      "retweets": 25,
+      "replies": 1,
+      "impressions": 2690
+    },
+    "tone": "casual",
+    "style": "case study",
+    "time_posted": "7:15"
+  },
+  {
+    "tweet_id": "040",
+    "text": "The solopreneur's roadmap for launching with AI",
+    "theme": "No-Code AI",
+    "date": "2025-05-13",
+    "engagement": {
+      "likes": 46,
+      "retweets": 19,
+      "replies": 8,
+      "impressions": 1565
+    },
+    "tone": "casual",
+    "style": "thread",
+    "time_posted": "16:00"
+  },
+  {
+    "tweet_id": "041",
+    "text": "A quick breakdown of prompt engineering success",
+    "theme": "Prompt Engineering",
+    "date": "2025-02-05",
+    "engagement": {
+      "likes": 47,
+      "retweets": 8,
+      "replies": 4,
+      "impressions": 1590
+    },
+    "tone": "motivational",
+    "style": "listicle",
+    "time_posted": "16:30"
+  },
+  {
+    "tweet_id": "042",
+    "text": "The solopreneur's roadmap for launching with AI",
+    "theme": "AI Productivity",
+    "date": "2025-04-21",
+    "engagement": {
+      "likes": 67,
+      "retweets": 6,
+      "replies": 0,
+      "impressions": 2031
+    },
+    "tone": "motivational",
+    "style": "one-liner",
+    "time_posted": "11:45"
+  },
+  {
+    "tweet_id": "043",
+    "text": "3 lessons I learned from building an AI-first tool",
+    "theme": "No-Code AI",
+    "date": "2025-05-12",
+    "engagement": {
+      "likes": 78,
+      "retweets": 5,
+      "replies": 6,
+      "impressions": 2279
+    },
+    "tone": "casual",
+    "style": "listicle",
+    "time_posted": "9:30"
+  },
+  {
+    "tweet_id": "044",
+    "text": "Why most prompt engineering ideas fail (and what to do instead)",
+    "theme": "Prompt Engineering",
+    "date": "2025-07-02",
+    "engagement": {
+      "likes": 66,
+      "retweets": 5,
+      "replies": 2,
+      "impressions": 2147
+    },
+    "tone": "professional",
+    "style": "thread",
+    "time_posted": "22:00"
+  },
+  {
+    "tweet_id": "045",
+    "text": "AI isn\u2019t enough: startup building needs this too",
+    "theme": "Startup Building",
+    "date": "2025-05-11",
+    "engagement": {
+      "likes": 60,
+      "retweets": 4,
+      "replies": 7,
+      "impressions": 1796
+    },
+    "tone": "casual",
+    "style": "one-liner",
+    "time_posted": "8:15"
+  },
+  {
+    "tweet_id": "046",
+    "text": "The solopreneur's roadmap for launching with AI",
+    "theme": "Solopreneur Tactics",
+    "date": "2025-04-23",
+    "engagement": {
+      "likes": 21,
+      "retweets": 18,
+      "replies": 8,
+      "impressions": 541
+    },
+    "tone": "professional",
+    "style": "case study",
+    "time_posted": "14:30"
+  },
+  {
+    "tweet_id": "047",
+    "text": "The solopreneur's roadmap for launching with AI",
+    "theme": "Startup Building",
+    "date": "2025-06-03",
+    "engagement": {
+      "likes": 29,
+      "retweets": 17,
+      "replies": 8,
+      "impressions": 904
+    },
+    "tone": "casual",
+    "style": "case study",
+    "time_posted": "10:00"
+  },
+  {
+    "tweet_id": "048",
+    "text": "Why most prompt engineering ideas fail (and what to do instead)",
+    "theme": "Prompt Engineering",
+    "date": "2025-03-03",
+    "engagement": {
+      "likes": 89,
+      "retweets": 16,
+      "replies": 4,
+      "impressions": 2572
+    },
+    "tone": "casual",
+    "style": "listicle",
+    "time_posted": "12:30"
+  },
+  {
+    "tweet_id": "049",
+    "text": "A quick breakdown of prompt engineering success",
+    "theme": "Prompt Engineering",
+    "date": "2025-02-23",
+    "engagement": {
+      "likes": 25,
+      "retweets": 25,
+      "replies": 3,
+      "impressions": 762
+    },
+    "tone": "professional",
+    "style": "one-liner",
+    "time_posted": "11:15"
+  },
+  {
+    "tweet_id": "050",
+    "text": "AI isn\u2019t enough: prompt engineering needs this too",
+    "theme": "Prompt Engineering",
+    "date": "2025-03-10",
+    "engagement": {
+      "likes": 97,
+      "retweets": 19,
+      "replies": 9,
+      "impressions": 3024
+    },
+    "tone": "motivational",
+    "style": "case study",
+    "time_posted": "19:00"
+  },
+  {
+    "tweet_id": "051",
+    "text": "A quick breakdown of ai productivity success",
+    "theme": "AI Productivity",
+    "date": "2025-05-14",
+    "engagement": {
+      "likes": 19,
+      "retweets": 4,
+      "replies": 0,
+      "impressions": 521
+    },
+    "tone": "professional",
+    "style": "listicle",
+    "time_posted": "9:15"
+  },
+  {
+    "tweet_id": "052",
+    "text": "The solopreneur's roadmap for launching with AI",
+    "theme": "No-Code AI",
+    "date": "2025-06-09",
+    "engagement": {
+      "likes": 7,
+      "retweets": 11,
+      "replies": 7,
+      "impressions": 126
+    },
+    "tone": "insightful",
+    "style": "one-liner",
+    "time_posted": "9:00"
+  },
+  {
+    "tweet_id": "053",
+    "text": "3 lessons I learned from building an AI-first tool",
+    "theme": "AI Productivity",
+    "date": "2025-02-19",
+    "engagement": {
+      "likes": 81,
+      "retweets": 13,
+      "replies": 7,
+      "impressions": 2501
+    },
+    "tone": "professional",
+    "style": "one-liner",
+    "time_posted": "22:15"
+  },
+  {
+    "tweet_id": "054",
+    "text": "3 lessons I learned from building an AI-first tool",
+    "theme": "No-Code AI",
+    "date": "2025-03-08",
+    "engagement": {
+      "likes": 19,
+      "retweets": 22,
+      "replies": 5,
+      "impressions": 667
+    },
+    "tone": "professional",
+    "style": "one-liner",
+    "time_posted": "10:45"
+  },
+  {
+    "tweet_id": "055",
+    "text": "The solopreneur's roadmap for launching with AI",
+    "theme": "AI Productivity",
+    "date": "2025-02-07",
+    "engagement": {
+      "likes": 8,
+      "retweets": 25,
+      "replies": 7,
+      "impressions": 277
+    },
+    "tone": "motivational",
+    "style": "one-liner",
+    "time_posted": "22:45"
+  },
+  {
+    "tweet_id": "056",
+    "text": "3 lessons I learned from building an AI-first tool",
+    "theme": "AI Productivity",
+    "date": "2025-04-22",
+    "engagement": {
+      "likes": 75,
+      "retweets": 15,
+      "replies": 5,
+      "impressions": 2229
+    },
+    "tone": "professional",
+    "style": "thread",
+    "time_posted": "11:30"
+  },
+  {
+    "tweet_id": "057",
+    "text": "Why most solopreneur tactics ideas fail (and what to do instead)",
+    "theme": "Solopreneur Tactics",
+    "date": "2025-06-20",
+    "engagement": {
+      "likes": 23,
+      "retweets": 4,
+      "replies": 4,
+      "impressions": 716
+    },
+    "tone": "casual",
+    "style": "case study",
+    "time_posted": "15:30"
+  },
+  {
+    "tweet_id": "058",
+    "text": "3 lessons I learned from building an AI-first tool",
+    "theme": "Solopreneur Tactics",
+    "date": "2025-05-03",
+    "engagement": {
+      "likes": 51,
+      "retweets": 14,
+      "replies": 4,
+      "impressions": 1483
+    },
+    "tone": "insightful",
+    "style": "one-liner",
+    "time_posted": "14:45"
+  },
+  {
+    "tweet_id": "059",
+    "text": "3 lessons I learned from building an AI-first tool",
+    "theme": "No-Code AI",
+    "date": "2025-06-17",
+    "engagement": {
+      "likes": 94,
+      "retweets": 13,
+      "replies": 4,
+      "impressions": 2908
+    },
+    "tone": "casual",
+    "style": "case study",
+    "time_posted": "10:15"
+  },
+  {
+    "tweet_id": "060",
+    "text": "AI isn\u2019t enough: startup building needs this too",
+    "theme": "Startup Building",
+    "date": "2025-04-07",
+    "engagement": {
+      "likes": 83,
+      "retweets": 25,
+      "replies": 8,
+      "impressions": 2481
+    },
+    "tone": "casual",
+    "style": "one-liner",
+    "time_posted": "15:15"
+  },
+  {
+    "tweet_id": "061",
+    "text": "Why most prompt engineering ideas fail (and what to do instead)",
+    "theme": "Prompt Engineering",
+    "date": "2025-02-05",
+    "engagement": {
+      "likes": 63,
+      "retweets": 24,
+      "replies": 8,
+      "impressions": 2078
+    },
+    "tone": "professional",
+    "style": "one-liner",
+    "time_posted": "13:00"
+  },
+  {
+    "tweet_id": "062",
+    "text": "AI isn\u2019t enough: solopreneur tactics needs this too",
+    "theme": "Solopreneur Tactics",
+    "date": "2025-04-10",
+    "engagement": {
+      "likes": 9,
+      "retweets": 7,
+      "replies": 5,
+      "impressions": 265
+    },
+    "tone": "casual",
+    "style": "listicle",
+    "time_posted": "16:15"
+  },
+  {
+    "tweet_id": "063",
+    "text": "3 lessons I learned from building an AI-first tool",
+    "theme": "Startup Building",
+    "date": "2025-03-19",
+    "engagement": {
+      "likes": 20,
+      "retweets": 24,
+      "replies": 10,
+      "impressions": 788
+    },
+    "tone": "motivational",
+    "style": "listicle",
+    "time_posted": "7:30"
+  },
+  {
+    "tweet_id": "064",
+    "text": "The solopreneur's roadmap for launching with AI",
+    "theme": "Solopreneur Tactics",
+    "date": "2025-03-13",
+    "engagement": {
+      "likes": 44,
+      "retweets": 23,
+      "replies": 1,
+      "impressions": 1363
+    },
+    "tone": "motivational",
+    "style": "thread",
+    "time_posted": "21:30"
+  },
+  {
+    "tweet_id": "065",
+    "text": "A quick breakdown of startup building success",
+    "theme": "Startup Building",
+    "date": "2025-05-10",
+    "engagement": {
+      "likes": 74,
+      "retweets": 7,
+      "replies": 10,
+      "impressions": 2164
+    },
+    "tone": "professional",
+    "style": "case study",
+    "time_posted": "10:15"
+  },
+  {
+    "tweet_id": "066",
+    "text": "Why most no-code ai ideas fail (and what to do instead)",
+    "theme": "No-Code AI",
+    "date": "2025-04-20",
+    "engagement": {
+      "likes": 29,
+      "retweets": 16,
+      "replies": 5,
+      "impressions": 929
+    },
+    "tone": "motivational",
+    "style": "listicle",
+    "time_posted": "21:30"
+  },
+  {
+    "tweet_id": "067",
+    "text": "3 lessons I learned from building an AI-first tool",
+    "theme": "AI Productivity",
+    "date": "2025-03-01",
+    "engagement": {
+      "likes": 44,
+      "retweets": 1,
+      "replies": 1,
+      "impressions": 1363
+    },
+    "tone": "casual",
+    "style": "case study",
+    "time_posted": "8:45"
+  },
+  {
+    "tweet_id": "068",
+    "text": "A quick breakdown of prompt engineering success",
+    "theme": "Prompt Engineering",
+    "date": "2025-05-06",
+    "engagement": {
+      "likes": 76,
+      "retweets": 22,
+      "replies": 3,
+      "impressions": 2299
+    },
+    "tone": "insightful",
+    "style": "listicle",
+    "time_posted": "12:45"
+  },
+  {
+    "tweet_id": "069",
+    "text": "3 lessons I learned from building an AI-first tool",
+    "theme": "Solopreneur Tactics",
+    "date": "2025-03-06",
+    "engagement": {
+      "likes": 22,
+      "retweets": 15,
+      "replies": 7,
+      "impressions": 736
+    },
+    "tone": "insightful",
+    "style": "listicle",
+    "time_posted": "13:15"
+  },
+  {
+    "tweet_id": "070",
+    "text": "The solopreneur's roadmap for launching with AI",
+    "theme": "AI Productivity",
+    "date": "2025-04-28",
+    "engagement": {
+      "likes": 44,
+      "retweets": 19,
+      "replies": 10,
+      "impressions": 1304
+    },
+    "tone": "professional",
+    "style": "case study",
+    "time_posted": "21:00"
+  },
+  {
+    "tweet_id": "071",
+    "text": "3 lessons I learned from building an AI-first tool",
+    "theme": "Prompt Engineering",
+    "date": "2025-06-06",
+    "engagement": {
+      "likes": 23,
+      "retweets": 3,
+      "replies": 4,
+      "impressions": 689
+    },
+    "tone": "motivational",
+    "style": "listicle",
+    "time_posted": "9:15"
+  },
+  {
+    "tweet_id": "072",
+    "text": "The solopreneur's roadmap for launching with AI",
+    "theme": "AI Productivity",
+    "date": "2025-02-20",
+    "engagement": {
+      "likes": 38,
+      "retweets": 6,
+      "replies": 6,
+      "impressions": 1225
+    },
+    "tone": "professional",
+    "style": "case study",
+    "time_posted": "22:15"
+  },
+  {
+    "tweet_id": "073",
+    "text": "3 lessons I learned from building an AI-first tool",
+    "theme": "Solopreneur Tactics",
+    "date": "2025-03-23",
+    "engagement": {
+      "likes": 64,
+      "retweets": 5,
+      "replies": 1,
+      "impressions": 2037
+    },
+    "tone": "motivational",
+    "style": "case study",
+    "time_posted": "9:30"
+  },
+  {
+    "tweet_id": "074",
+    "text": "The solopreneur's roadmap for launching with AI",
+    "theme": "AI Productivity",
+    "date": "2025-04-29",
+    "engagement": {
+      "likes": 72,
+      "retweets": 2,
+      "replies": 7,
+      "impressions": 2342
+    },
+    "tone": "professional",
+    "style": "one-liner",
+    "time_posted": "17:30"
+  },
+  {
+    "tweet_id": "075",
+    "text": "A quick breakdown of ai productivity success",
+    "theme": "AI Productivity",
+    "date": "2025-05-26",
+    "engagement": {
+      "likes": 13,
+      "retweets": 3,
+      "replies": 5,
+      "impressions": 433
+    },
+    "tone": "motivational",
+    "style": "one-liner",
+    "time_posted": "16:15"
+  },
+  {
+    "tweet_id": "076",
+    "text": "A quick breakdown of solopreneur tactics success",
+    "theme": "Solopreneur Tactics",
+    "date": "2025-03-28",
+    "engagement": {
+      "likes": 93,
+      "retweets": 0,
+      "replies": 5,
+      "impressions": 2903
+    },
+    "tone": "motivational",
+    "style": "one-liner",
+    "time_posted": "16:45"
+  },
+  {
+    "tweet_id": "077",
+    "text": "Why most ai productivity ideas fail (and what to do instead)",
+    "theme": "AI Productivity",
+    "date": "2025-03-04",
+    "engagement": {
+      "likes": 39,
+      "retweets": 6,
+      "replies": 3,
+      "impressions": 1310
+    },
+    "tone": "casual",
+    "style": "case study",
+    "time_posted": "13:30"
+  },
+  {
+    "tweet_id": "078",
+    "text": "The solopreneur's roadmap for launching with AI",
+    "theme": "No-Code AI",
+    "date": "2025-05-15",
+    "engagement": {
+      "likes": 19,
+      "retweets": 11,
+      "replies": 7,
+      "impressions": 686
+    },
+    "tone": "motivational",
+    "style": "listicle",
+    "time_posted": "7:30"
+  },
+  {
+    "tweet_id": "079",
+    "text": "The solopreneur's roadmap for launching with AI",
+    "theme": "Solopreneur Tactics",
+    "date": "2025-03-20",
+    "engagement": {
+      "likes": 50,
+      "retweets": 6,
+      "replies": 9,
+      "impressions": 1426
+    },
+    "tone": "casual",
+    "style": "listicle",
+    "time_posted": "11:45"
+  },
+  {
+    "tweet_id": "080",
+    "text": "AI isn\u2019t enough: solopreneur tactics needs this too",
+    "theme": "Solopreneur Tactics",
+    "date": "2025-03-25",
+    "engagement": {
+      "likes": 6,
+      "retweets": 6,
+      "replies": 7,
+      "impressions": 287
+    },
+    "tone": "insightful",
+    "style": "thread",
+    "time_posted": "14:30"
+  },
+  {
+    "tweet_id": "081",
+    "text": "The solopreneur's roadmap for launching with AI",
+    "theme": "No-Code AI",
+    "date": "2025-06-15",
+    "engagement": {
+      "likes": 44,
+      "retweets": 19,
+      "replies": 9,
+      "impressions": 1372
+    },
+    "tone": "casual",
+    "style": "one-liner",
+    "time_posted": "16:30"
+  },
+  {
+    "tweet_id": "082",
+    "text": "3 lessons I learned from building an AI-first tool",
+    "theme": "No-Code AI",
+    "date": "2025-02-27",
+    "engagement": {
+      "likes": 37,
+      "retweets": 1,
+      "replies": 8,
+      "impressions": 1088
+    },
+    "tone": "casual",
+    "style": "case study",
+    "time_posted": "17:15"
+  },
+  {
+    "tweet_id": "083",
+    "text": "3 lessons I learned from building an AI-first tool",
+    "theme": "No-Code AI",
+    "date": "2025-04-08",
+    "engagement": {
+      "likes": 12,
+      "retweets": 16,
+      "replies": 1,
+      "impressions": 311
+    },
+    "tone": "motivational",
+    "style": "listicle",
+    "time_posted": "12:45"
+  },
+  {
+    "tweet_id": "084",
+    "text": "A quick breakdown of solopreneur tactics success",
+    "theme": "Solopreneur Tactics",
+    "date": "2025-04-27",
+    "engagement": {
+      "likes": 58,
+      "retweets": 12,
+      "replies": 1,
+      "impressions": 1705
+    },
+    "tone": "insightful",
+    "style": "listicle",
+    "time_posted": "11:15"
+  },
+  {
+    "tweet_id": "085",
+    "text": "Why most solopreneur tactics ideas fail (and what to do instead)",
+    "theme": "Solopreneur Tactics",
+    "date": "2025-05-29",
+    "engagement": {
+      "likes": 90,
+      "retweets": 22,
+      "replies": 6,
+      "impressions": 2858
+    },
+    "tone": "professional",
+    "style": "one-liner",
+    "time_posted": "11:45"
+  },
+  {
+    "tweet_id": "086",
+    "text": "Why most startup building ideas fail (and what to do instead)",
+    "theme": "Startup Building",
+    "date": "2025-02-09",
+    "engagement": {
+      "likes": 6,
+      "retweets": 12,
+      "replies": 3,
+      "impressions": 106
+    },
+    "tone": "professional",
+    "style": "case study",
+    "time_posted": "13:45"
+  },
+  {
+    "tweet_id": "087",
+    "text": "A quick breakdown of solopreneur tactics success",
+    "theme": "Solopreneur Tactics",
+    "date": "2025-02-03",
+    "engagement": {
+      "likes": 52,
+      "retweets": 22,
+      "replies": 2,
+      "impressions": 1669
+    },
+    "tone": "professional",
+    "style": "case study",
+    "time_posted": "9:00"
+  },
+  {
+    "tweet_id": "088",
+    "text": "Why most startup building ideas fail (and what to do instead)",
+    "theme": "Startup Building",
+    "date": "2025-03-30",
+    "engagement": {
+      "likes": 74,
+      "retweets": 16,
+      "replies": 7,
+      "impressions": 2164
+    },
+    "tone": "motivational",
+    "style": "thread",
+    "time_posted": "14:15"
+  },
+  {
+    "tweet_id": "089",
+    "text": "AI isn\u2019t enough: ai productivity needs this too",
+    "theme": "AI Productivity",
+    "date": "2025-02-08",
+    "engagement": {
+      "likes": 46,
+      "retweets": 21,
+      "replies": 3,
+      "impressions": 1406
+    },
+    "tone": "casual",
+    "style": "thread",
+    "time_posted": "7:15"
+  },
+  {
+    "tweet_id": "090",
+    "text": "AI isn\u2019t enough: prompt engineering needs this too",
+    "theme": "Prompt Engineering",
+    "date": "2025-02-20",
+    "engagement": {
+      "likes": 85,
+      "retweets": 1,
+      "replies": 6,
+      "impressions": 2682
+    },
+    "tone": "casual",
+    "style": "listicle",
+    "time_posted": "20:30"
+  },
+  {
+    "tweet_id": "091",
+    "text": "A quick breakdown of prompt engineering success",
+    "theme": "Prompt Engineering",
+    "date": "2025-06-10",
+    "engagement": {
+      "likes": 90,
+      "retweets": 15,
+      "replies": 9,
+      "impressions": 2713
+    },
+    "tone": "casual",
+    "style": "case study",
+    "time_posted": "12:30"
+  },
+  {
+    "tweet_id": "092",
+    "text": "Why most solopreneur tactics ideas fail (and what to do instead)",
+    "theme": "Solopreneur Tactics",
+    "date": "2025-03-25",
+    "engagement": {
+      "likes": 72,
+      "retweets": 9,
+      "replies": 4,
+      "impressions": 2197
+    },
+    "tone": "motivational",
+    "style": "listicle",
+    "time_posted": "17:30"
+  },
+  {
+    "tweet_id": "093",
+    "text": "AI isn\u2019t enough: solopreneur tactics needs this too",
+    "theme": "Solopreneur Tactics",
+    "date": "2025-06-14",
+    "engagement": {
+      "likes": 50,
+      "retweets": 20,
+      "replies": 3,
+      "impressions": 1407
+    },
+    "tone": "professional",
+    "style": "listicle",
+    "time_posted": "16:45"
+  },
+  {
+    "tweet_id": "094",
+    "text": "AI isn\u2019t enough: solopreneur tactics needs this too",
+    "theme": "Solopreneur Tactics",
+    "date": "2025-04-05",
+    "engagement": {
+      "likes": 91,
+      "retweets": 24,
+      "replies": 9,
+      "impressions": 2895
+    },
+    "tone": "insightful",
+    "style": "case study",
+    "time_posted": "20:00"
+  },
+  {
+    "tweet_id": "095",
+    "text": "AI isn\u2019t enough: prompt engineering needs this too",
+    "theme": "Prompt Engineering",
+    "date": "2025-06-26",
+    "engagement": {
+      "likes": 76,
+      "retweets": 20,
+      "replies": 10,
+      "impressions": 2272
+    },
+    "tone": "motivational",
+    "style": "thread",
+    "time_posted": "18:30"
+  },
+  {
+    "tweet_id": "096",
+    "text": "The solopreneur's roadmap for launching with AI",
+    "theme": "AI Productivity",
+    "date": "2025-06-26",
+    "engagement": {
+      "likes": 29,
+      "retweets": 20,
+      "replies": 8,
+      "impressions": 782
+    },
+    "tone": "professional",
+    "style": "one-liner",
+    "time_posted": "22:00"
+  },
+  {
+    "tweet_id": "097",
+    "text": "3 lessons I learned from building an AI-first tool",
+    "theme": "Startup Building",
+    "date": "2025-06-18",
+    "engagement": {
+      "likes": 84,
+      "retweets": 15,
+      "replies": 3,
+      "impressions": 2510
+    },
+    "tone": "casual",
+    "style": "one-liner",
+    "time_posted": "14:45"
+  },
+  {
+    "tweet_id": "098",
+    "text": "AI isn\u2019t enough: startup building needs this too",
+    "theme": "Startup Building",
+    "date": "2025-07-03",
+    "engagement": {
+      "likes": 16,
+      "retweets": 14,
+      "replies": 8,
+      "impressions": 438
+    },
+    "tone": "casual",
+    "style": "case study",
+    "time_posted": "15:00"
+  },
+  {
+    "tweet_id": "099",
+    "text": "A quick breakdown of ai productivity success",
+    "theme": "AI Productivity",
+    "date": "2025-03-27",
+    "engagement": {
+      "likes": 55,
+      "retweets": 14,
+      "replies": 1,
+      "impressions": 1710
+    },
+    "tone": "professional",
+    "style": "listicle",
+    "time_posted": "11:45"
+  },
+  {
+    "tweet_id": "100",
+    "text": "AI isn\u2019t enough: ai productivity needs this too",
+    "theme": "AI Productivity",
+    "date": "2025-06-16",
+    "engagement": {
+      "likes": 74,
+      "retweets": 17,
+      "replies": 5,
+      "impressions": 2326
+    },
+    "tone": "professional",
+    "style": "case study",
+    "time_posted": "19:45"
+  }
+]
