@@ -18,7 +18,7 @@ def chat_history_area():
                     with st.expander("Show LinkedIn Variant"):
                         st.markdown(st.session_state.last_linkedin_variant)
 
-def retry_button(personality, model_choice, temperature, top_p, graph):
+def retry_button(personality, model_choice, temperature, top_p, contentGraph):
     if st.session_state.last_input and st.session_state.chat_history:
         last_agent_index = next(
             (i for i in reversed(range(len(st.session_state.chat_history)))
@@ -28,7 +28,7 @@ def retry_button(personality, model_choice, temperature, top_p, graph):
         if last_agent_index is not None:
             if st.button("🔁", key="retry", help="Retry with same theme"):
                 with st.spinner("Retrying..."):
-                    result = graph.invoke({
+                    result = contentGraph.invoke({
                         "theme": st.session_state.last_input,
                         "personality": personality.lower() if personality else "smart-casual",
                         "model_choice": model_choice,

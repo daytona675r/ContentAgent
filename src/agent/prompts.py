@@ -95,3 +95,33 @@ User input: "{user_input}"
 
 Respond with only the improved theme.
 '''
+
+SUMMARIZE_BUSINESS_INPUT_PROMPT = '''
+    You are a startup analyst. Analyze the following business information and extract a structured summary:
+
+    - Industry / Niche
+    - Target Audience
+    - Product or Service Description
+    - Problem it Solves
+    - Key Features or Keywords
+    - Unique Selling Points (USP)
+
+    Respond in JSON format.
+
+    --- Business Info ---
+    {business_input}
+    '''
+
+SUMMARIZE_INSIGHTS_PROMPT = '''
+  You are an expert business analyst. Given the following raw insights from social media discussions and answers,
+  summarize them into key categories.
+
+  Return your answer as a JSON object where each key is a category (e.g., "Market Trends", "Customer Pain Points", 
+  "Competitive Landscape", "Content Strategy Suggestions") and each value is a concise insight for that category.
+
+  Respond ONLY with valid JSON. Do not include any commentary or explanation.
+
+  --- Raw Insights ---
+  {raw_insights}
+  --- End Raw Insights ---
+'''

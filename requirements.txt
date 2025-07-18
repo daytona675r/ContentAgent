@@ -12,3 +12,5 @@ langchain-community
 langchain-openai
 langchain-google-genai
 asyncio
+tavily-python
+pypdf

@@ -41,7 +41,7 @@ langchain_google_genai.GoogleGenerativeAI.api_key = os.getenv("GOOGLE_API_KEY")
 
 
 # --- Vector DB Setup ---
-chroma_store = Chroma(
+tweet_store = Chroma(
     collection_name="tweet_history",
     embedding_function=OpenAIEmbeddings(),
     persist_directory="./chroma_db"
@@ -79,7 +79,7 @@ def store_top_performer(tweet: str, metadata: dict = None):
     if metadata is None:
         metadata = {"source": "agent", "score": 0.90}
     doc = Document(page_content=tweet, metadata=metadata)
-    chroma_store.add_documents([doc])
+    tweet_store.add_documents([doc])
 
 
 
@@ -128,7 +128,7 @@ def memory_retriever(state: ContentState):
     print("📚 Retrieving top-performing tweets from memory...")
     query = state["theme"]
      # Search the vectorstore
-    results = chroma_store.similarity_search(query, k=10)  # Get more for filtering
+    results = tweet_store.similarity_search(query, k=10)  # Get more for filtering
     
     # Filter by likes > 30
     top_performers = []

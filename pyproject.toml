@@ -17,6 +17,8 @@ dependencies = [
     "streamlit",
     "asyncio",
     "langchain-google-genai",
+    "tavily-python",
+    "pypdf"
 ]
 
 [project.optional-dependencies]

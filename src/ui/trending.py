@@ -1,6 +1,6 @@
 import streamlit as st
 
-def trending_section(fetch_trending, selected_theme, temperature, top_p, personality, model_choice, graph):
+def trending_section(fetch_trending, selected_theme, temperature, top_p, personality, model_choice, contentGraph):
     st.markdown("#### 🔥 Trending Topics")
     trending_titles = fetch_trending()
     selected = st.radio("Use a trending topic?", trending_titles, index=None)
@@ -11,7 +11,7 @@ def trending_section(fetch_trending, selected_theme, temperature, top_p, persona
         st.session_state.last_input = user_input
         st.session_state.chat_history.append({"role": "user", "content": user_input})
         with st.spinner("Generating tweet variants..."):
-            result = graph.invoke({
+            result = contentGraph.invoke({
                 "theme": user_input,
                 "personality": personality.lower() if personality else "smart-casual",
                 "model_choice": model_choice,
