@@ -3,15 +3,19 @@
 import requests
 import streamlit as st
 
-from src.agent.contentGraph import graph as contentGraph
+from src.agent.contentGraph import contentGraph
 from langgraph.graph import StateGraph
 from typing import TypedDict, List
 from tools.trending import get_trending_topics
 from src.ui.sidebar import sidebar_settings
-from src.ui.trending import trending_section
+from src.ui.trending import market_insights_topics_section
 from src.ui.chat import chat_input_area, chat_history_area, retry_button
 from src.ui.token_counter import floating_token_box
 from src.ui.insights import market_insights_tab
+from ui.facebook import facebook_tab
+from ui.instagram import instagram_tab
+from ui.linkedin import linkedin_tab
+from ui.twitter import twitter_tab
 
 # Initialize session state
 if "chat_history" not in st.session_state:
@@ -22,26 +26,25 @@ if "last_input" not in st.session_state:
 
 
 # --- Main App ---
-st.title("🤖 AI Content Agent")
+st.title("🌐 AI Content Agent")
 
 with st.sidebar:
     personality, model_choice, temperature, top_p = sidebar_settings()
 
-@st.cache_data(ttl=3600)
-def fetch_trending():
-    return get_trending_topics()
+# @st.cache_data(ttl=3600)
+# def fetch_trending():
+#     return get_trending_topics()
 
 # --- Tabs ---
-tabs = st.tabs(["📊 Market Insights", "Chat Agent"])
+tabs = st.tabs(["📊 Insights", "Chat", "𝕏", "[in]", "ƒ", "🅾"])
 
 with tabs[0]:  # 📊 Market Insights
     market_insights_tab(personality, model_choice, temperature, top_p)
 
 with tabs[1]:  # Chat Agent
-    selected_theme = trending_section(fetch_trending, None, temperature, top_p, personality, model_choice, contentGraph)
-
-    # Input from user, use trending topic as placeholder if selected
-    user_input = chat_input_area(selected_theme)
+    selected_theme = market_insights_topics_section(model_choice,personality, temperature, top_p)
+    # If a topic is selected, use it as the value for the chat input
+    user_input = chat_input_area(selected_theme if selected_theme else "")
 
     if user_input:
         st.session_state.last_input = user_input
@@ -71,6 +74,18 @@ with tabs[1]:  # Chat Agent
     # Floating window for token/price info only (bottom right, 1/10 of window width)
     if hasattr(st.session_state, "final_state") and st.session_state.final_state:
         floating_token_box(st.session_state.final_state)
+
+with tabs[2]: 
+    twitter_tab()
+
+with tabs[3]: 
+    linkedin_tab()
+
+with tabs[4]: 
+    facebook_tab()
+
+with tabs[5]: 
+    instagram_tab()
 
 
 

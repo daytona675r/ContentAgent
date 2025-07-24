@@ -125,3 +125,22 @@ SUMMARIZE_INSIGHTS_PROMPT = '''
   {raw_insights}
   --- End Raw Insights ---
 '''
+
+TOPICS_FROM_INSIGHTS_PROMPT = '''
+  You are a content strategist helping a startup create social media content that resonates with its target audience.
+
+
+  Here are insights from the market and customer conversations:
+  {market_insights}
+
+  Please generate 5 content topic ideas that:
+  - Address key pain points or challenges discussed in the market
+  - Reflect current trends or opportunities
+  - Are relevant to the target audience
+  - Align with the product or positioning of the startup
+  - Compare our product with others in the competitive landscape
+  - Simply use the Content Strategy Suggestions from the market insights
+
+  Keep the tone {tone}, and write each topic as a short, punchy title or concept idea.
+  Return the topics as a json list.
+'''

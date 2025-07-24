@@ -299,7 +299,7 @@ workflow.add_conditional_edges(
 
 workflow.add_edge("GenerateLinkedInVariant", END)
 
-graph = workflow.compile()
+contentGraph = workflow.compile()
 
 #final_state = graph.invoke({**initial_state,"theme": "Launching profitable AI solopreneur tools"})
 #print("\n✅ Final Result:")

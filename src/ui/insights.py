@@ -226,6 +226,6 @@ def market_insights_tab(personality, model_choice, temperature, top_p):
             #     st.markdown(insights_summary)
     else:
         st.info("Please enter a website URL or upload a business file to begin.") 
-        st.stop()
+        #st.stop()
 
     
