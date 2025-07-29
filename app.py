@@ -3,18 +3,24 @@
 import requests
 import streamlit as st
 
+from agent.social_content_graph import social_content_graph
+from agent.social_content_graph import ContentState
 from src.agent.contentGraph import contentGraph
 from langgraph.graph import StateGraph
 from typing import TypedDict, List
+from tools.business_info import get_business_info
+from tools.insights import get_market_insights
 from tools.trending import get_trending_topics
 from src.ui.sidebar import sidebar_settings
 from src.ui.trending import market_insights_topics_section
 from src.ui.chat import chat_input_area, chat_history_area, retry_button
 from src.ui.token_counter import floating_token_box
 from src.ui.insights import market_insights_tab
+from ui.content_worker import run_content_generation
 from ui.facebook import facebook_tab
 from ui.instagram import instagram_tab
 from ui.linkedin import linkedin_tab
+from ui.summary import summary_tab
 from ui.twitter import twitter_tab
 
 # Initialize session state
@@ -23,6 +29,12 @@ if "chat_history" not in st.session_state:
 
 if "last_input" not in st.session_state:
     st.session_state.last_input = ""
+
+if "final_state" not in st.session_state:
+    st.session_state.final_state = ContentState.__new__(ContentState)
+
+if "final_content" not in st.session_state:
+    st.session_state.final_content = []
 
 
 # --- Main App ---
@@ -36,7 +48,15 @@ with st.sidebar:
 #     return get_trending_topics()
 
 # --- Tabs ---
-tabs = st.tabs(["📊 Insights", "Chat", "𝕏", "[in]", "ƒ", "🅾"])
+tabs = st.tabs([
+    "## 📊 INSIGHTS",
+    "## 🗪 CHAT",
+    "## 📝 SUMMARY",
+    "## 𝕏 / TWITTER",
+    "## LINKED[IN]",
+    "## ƒACEBOOK",
+    "## 🅾 INSTA"
+])
 
 with tabs[0]:  # 📊 Market Insights
     market_insights_tab(personality, model_choice, temperature, top_p)
@@ -49,20 +69,39 @@ with tabs[1]:  # Chat Agent
     if user_input:
         st.session_state.last_input = user_input
         st.session_state.chat_history.append({"role": "user", "content": user_input})
-        with st.spinner("Generating tweet variants..."):
-            result = contentGraph.invoke({
-                "theme": user_input,
-                "personality": personality.lower() if personality else "smart-casual",
-                "model_choice": model_choice,
-                "temperature": temperature,
-                "top_p": top_p
-            })
-        final_tweet = result.get("selected_idea", "No tweet generated.")
-        linkedInVariant = result.get("linkedin_variant", "No LinkedIn variant generated.")
-        agent_message = f"Here's your best tweet variant:\n\n> {final_tweet})"
-        st.session_state.chat_history.append({"role": "agent", "content": agent_message})
-        st.session_state.last_linkedin_variant = linkedInVariant
-        st.session_state.final_state = result
+
+        final_state=run_content_generation(user_input)
+        # # Initialize state with topic + insights
+        # insights = " ".join(get_market_insights())
+        # business_info = " ".join(get_business_info())
+        # state = ContentState(
+        #     topic=user_input,
+        #     summarized_insights=insights,
+        #     business_info=business_info,
+        #     final_content={}
+        # )
+
+        # # Invoke the content generation graph
+        # with st.spinner("Generating content..."):
+        #     final_state = social_content_graph.invoke(state)
+
+        # with st.spinner("Generating tweet variants..."):
+        #     result = contentGraph.invoke({
+        #         "theme": user_input,
+        #         "personality": personality.lower() if personality else "smart-casual",
+        #         "model_choice": model_choice,
+        #         "temperature": temperature,
+        #         "top_p": top_p
+        #     })
+        # final_tweet = result.get("selected_idea", "No tweet generated.")
+        # linkedInVariant = result.get("linkedin_variant", "No LinkedIn variant generated.")
+        # agent_message = f"Here's your best tweet variant:\n\n> {final_tweet})"
+        # st.session_state.chat_history.append({"role": "agent", "content": agent_message})
+        # st.session_state.last_linkedin_variant = linkedInVariant
+        if final_state:
+            st.session_state.final_state = final_state
+            st.session_state.chat_history.append({"role": "agent", "content": "Your content is generated successfully! Look at the summary tab for details."})
+            
         st.rerun()
 
     # Display chat history (reverse for newest at bottom)
@@ -72,19 +111,22 @@ with tabs[1]:  # Chat Agent
     retry_button(personality, model_choice, temperature, top_p, contentGraph)
 
     # Floating window for token/price info only (bottom right, 1/10 of window width)
-    if hasattr(st.session_state, "final_state") and st.session_state.final_state:
-        floating_token_box(st.session_state.final_state)
+    # if hasattr(st.session_state, "final_state") and st.session_state.final_state:
+    #     floating_token_box(st.session_state.final_state)
 
-with tabs[2]: 
-    twitter_tab()
+with tabs[2]:  
+    summary_tab()
 
 with tabs[3]: 
-    linkedin_tab()
+    twitter_tab()
 
 with tabs[4]: 
-    facebook_tab()
+    linkedin_tab()
 
 with tabs[5]: 
+    facebook_tab()
+
+with tabs[6]: 
     instagram_tab()
 
 

@@ -2,7 +2,8 @@
   "dependencies": ["."],
   "graphs": {
     "insightsGraph": "./src/agent/businessInsightsGraph.py:insight_graph",
-    "contentGraph": "./src/agent/contentGraph.py:contentGraph"
+    "contentGraph": "./src/agent/contentGraph.py:contentGraph",
+    "social_content_graph": "./src/agent/social_content_graph.py:social_content_graph"
   },
   "env": ".env",
   "image_distro": "wolfi"

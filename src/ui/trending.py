@@ -1,9 +1,11 @@
 import streamlit as st
 import json
 
-from agent import contentGraph
-from src.agent.contentGraph import contentGraph as contentGraph
-from tools.insight_topics import get_market_insight_topics
+from agent.social_content_graph import social_content_graph
+from agent.social_content_graph import ContentState
+from tools.business_info import get_business_info
+from tools.insights import get_market_insight_topics, get_market_insights
+from ui.content_worker import run_content_generation
 
 # --- New Market Insights Topics Section ---
 def market_insights_topics_section( model, personality, temperature, top_p):
@@ -43,20 +45,24 @@ def market_insights_topics_section( model, personality, temperature, top_p):
         user_input = selected_topic
         st.session_state.last_input = user_input
         st.session_state.chat_history.append({"role": "user", "content": user_input})
-        with st.spinner("Generating tweet variants..."):
-            result = contentGraph.invoke({
-                "theme": user_input,
-                "personality": personality.lower() if personality else "smart-casual",
-                "model_choice": model,
-                "temperature": temperature,
-                "top_p": top_p
-            })
-        final_tweet = result.get("selected_idea", "No tweet generated.")
-        linkedInVariant = result.get("linkedin_variant", "No LinkedIn variant generated.")
-        agent_message = f"Here's your best tweet variant:\n\n> {final_tweet})"
-        st.session_state.chat_history.append({"role": "agent", "content": agent_message})
-        st.session_state.last_linkedin_variant = linkedInVariant
-        st.session_state.final_state = result
+        final_state=run_content_generation(user_input)
+    #    # Initialize state with topic + insights
+    #     insights = " ".join(get_market_insights())
+    #     business_info = " ".join(get_business_info())
+    #     state = ContentState(
+    #         topic=user_input,
+    #         summarized_insights=insights,
+    #         business_info=business_info,
+    #         final_content={}
+    #     )
+
+    #     # Invoke the content generation graph
+    #     with st.spinner("Generating content..."):
+    #         final_state = social_content_graph.invoke(state)
+
+        if final_state:
+            st.session_state.final_state = final_state
+            st.session_state.chat_history.append({"role": "agent", "content": "Your content is generated successfully! Look at the summary tab for details."})
         st.rerun()
     return selected_topic
 

@@ -39,7 +39,7 @@ def get_llm(state: BusinessInsightsState, temperature: float = 0.8, top_p: float
     model_choice = state.get("model_choice", "gpt-4")
     # Map UI model names to API model names
     model_map = {
-        "openai gpt-4": "gpt-4",
+        "openai gpt-4.5": "gpt-4.5",
         "gemini 1.5 pro": "gemini-1.5-pro"
     }
     model_name = model_map.get(model_choice.lower(), "gpt-4")

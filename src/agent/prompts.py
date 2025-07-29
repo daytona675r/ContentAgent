@@ -144,3 +144,122 @@ TOPICS_FROM_INSIGHTS_PROMPT = '''
   Keep the tone {tone}, and write each topic as a short, punchy title or concept idea.
   Return the topics as a json list.
 '''
+
+PLATFORM_CONTENT_PROMPT = '''
+    You are an expert multi-platform social media content creator.
+
+    ### Context:
+    - **Market Insights**: {insights}
+    - **Selected Topic**: {topic}
+
+    ### Task:
+    Generate **FOUR distinct social media posts** optimized for each platform:
+    1. **Twitter (X)**
+      - Short, punchy (max 280 characters)
+      - Focus on virality: wit, bold statements, quick hooks
+      - Use 1-3 relevant hashtags
+    2. **LinkedIn**
+      - Professional and thought-leadership tone (between 1300 and 2000 characters)
+      - Emphasize credibility, insight, and industry relevance
+    3. **Facebook**
+      - Conversational, community-oriented (between 40 and 80 characters)
+      - Include a relatable hook or story
+      - Encourage comments/shares
+    4. **Instagram**
+      - Visual or meme-like appeal
+      - Short caption with emotional/aspirational vibe
+      - Include 2-3 trendy hashtags
+
+    ### Requirements:
+    - Capture attention quickly.
+    - Posts must feel **different per platform** (not copies).
+    - Adapt tone and content to **audience expectations** of each platform.
+    - Align with the company’s product and audience pain points.
+    - Use **insights** to highlight relevance and value.
+    - Return **strict JSON** with keys `twitter`, `linkedin`, `facebook`, `instagram`. Put the content in the post field and the hashtags in the hashtags field.
+
+    ### JSON Output Format (must be valid):
+    {{
+      "twitter": {{
+        "post": "string",
+        "hashtags": "#tag1", "#tag2"
+      }},
+      "linkedin": {{
+        "post": "string",
+        "hashtags": "#tag1", "#tag2"
+      }},
+      "facebook": {{
+        "post": "string",
+        "hashtags": "#tag1", "#tag2"
+      }},
+      "instagram": {{
+        "post": "string",
+        "hashtags": "#tag1", "#tag2"
+      }}
+    }}
+
+    Only return the JSON, no explanations.
+"""
+
+'''
+
+PERSONA_SCORE_PROMPT = '''
+    You are evaluating social media content drafts. Four personas will provide their perspective:
+    1. Social Media Strategist – values clarity, engagement, virality potential, platform tone, and brand alignment.
+    2. Industry Expert – values technical accuracy, relevance, and thought leadership.
+    3. Target Customer – values pain point resonance, clarity of solution, and helpfulness.
+    4. Investor – values market potential, professionalism, and scalability.
+
+    For each persona, provide:
+    - Score (0-10)
+    - 2-3 bullet points of feedback
+
+    Platform: {platform}
+    Content Draft:
+    {content}
+
+    ### JSON Output Format (must be valid):
+    {{
+      "social_media_strategist": {{"score": 0-10, "feedback": "..."}},
+      "industry_expert": {{"score": 0-10, "feedback": "..."}},
+      "target_customer": {{"score": 0-10, "feedback": "..."}},
+      "investor": {{"score": 0-10, "feedback": "..."}}
+    }}
+
+'''
+
+REFINEMENT_PROMPT = """
+  You are an expert social media copywriter skilled in adapting content for multiple platforms.
+
+  ## Goal
+  Refine the following post to address the feedback provided. Keep the platform-specific style intact while improving weak points.
+
+  ### Inputs
+  - **Platform:** {platform}
+  - **Topic:** {topic}
+  - **Current Draft:**
+  {draft}
+
+  - **Feedback (from multiple personas):**
+  {feedback}
+
+  ### Instructions
+  - Fix weaknesses mentioned in the feedback.
+  - Do not lose the strengths of the original draft.
+  - Ensure platform style is respected:
+    - Twitter: Short, snappy, viral.
+    - LinkedIn: Professional, thought-leadership.
+    - Facebook: Community-oriented, conversational.
+    - Instagram: Visual, emotional, trendy.
+
+  ### Output
+  - Return **strict JSON**. Put the refined post in the post field and the hashtags if available in the hashtags field.
+
+    ### JSON Output Format (must be valid):
+    {{
+      "post": "string",
+      "hashtags": "#tag1", "#tag2"
+    }}
+
+    Only return the JSON, no explanations.
+"""

@@ -1,143 +1,110 @@
-# 🤖 AI Content Agent
+# AI Social Content Generator
 
-[![Python](https://img.shields.io/badge/Python-3.11%2B-blue?logo=python)](https://www.python.org/)
-[![Streamlit](https://img.shields.io/badge/Built%20with-Streamlit-ff4b4b?logo=streamlit)](https://streamlit.io/)
-[![LangGraph](https://img.shields.io/badge/LangGraph-Workflow-brightgreen)](https://github.com/langchain-ai/langgraph)
-[![License](https://img.shields.io/github/license/yourusername/yourrepo)](LICENSE)
+![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
+![Streamlit](https://img.shields.io/badge/Framework-Streamlit-FF4B4B)
+![LangGraph](https://img.shields.io/badge/AI-Agents%20via%20LangGraph-7A3E9D)
+![License](https://img.shields.io/badge/License-MIT-green)
 
----
-
-## Overview
-
-The **AI Content Agent** is a Streamlit-based app that helps you generate, score, and select high-performing social media content (tweets and LinkedIn posts) using LLMs like OpenAI GPT-4 and Gemini 1.5 Pro. It features trending topic inspiration, personality-driven prompt templates, token/cost tracking, and a beautiful chat UI.
+An AI-powered agentic application for **multi-platform content ideation, generation, scoring, and refinement**.  
+The app uses **LangGraph** to orchestrate two main processes:  
+1. **Business Insights Graph** – Processes uploaded business information and market data.  
+2. **Social Content Graph** – Generates and optimizes social media posts for multiple platforms.
 
 ---
 
 ## Features
 
-- 🔍 **Fetch trending topics** from the web to inspire your content
-- 🧠 **Generate multiple tweet & LinkedIn variants** for your selected theme
-- 🤖 **Score and select the best idea** automatically using an LLM as judge
-- ♻️ **Retry generation** until a high-quality result is found
-- 🗃️ **Save top-performing posts** to a vector database
-- 🧭 **Retrieve examples from memory** to guide future outputs
-- 🎛️ **Customize model behavior** (LLM choice, temperature, tone)
-- 💬 **Chat-like interface** with full conversation history
-- 📊 **See token usage and cost** during each session
+- Upload **business PDFs or text** to extract insights and summarize them.
+- Generate **customized market insights** from social platform data (e.g., Twitter, LinkedIn).
+- Create **platform-specific content**:
+  - Twitter (short & punchy)
+  - Facebook (community-oriented)
+  - LinkedIn (professional/thought leadership)
+  - Instagram (visual/meme-oriented)
+- **Multi-persona LLM-as-a-Judge scoring** (Strategist, Customer, Expert, Investor).
+- **Iterative refinement loop** until a quality threshold is reached.
+- Summarized **overview tab** + detailed per-platform tabs.
+- Full **real-time status updates** during graph execution.
 
 ---
 
-## Workflow Graph
+## Architecture
 
-![Workflow Graph](static/graph.jpeg)
+### 1. Business Insights Graph
+- **Input:** Uploaded business documents or text.
+- **Steps:**
+  1. Extract and embed raw data into vector DB.
+  2. Summarize insights for later use in content generation.
+  3. Store summarized insights for querying.
 
-### Node Descriptions (How the Agent Works)
+**Purpose:** Provides contextual knowledge for the Social Content Graph.
 
-- **IdeaSelector**: Receives your theme (topic) and refines it using an LLM to ensure it's clear, concise, and valuable for the target audience. If no theme is provided, a default is used.
-- **MemoryRetriever**: Searches the vector database (ChromaDB) for top-performing tweets related to your theme, filtered by likes, and provides up to three for inspiration.
-- **GenerateVariants**: The LLM generates three tweet variants using your theme, selected personality, and the retrieved top-performing examples.
-- **ScoreAndSelect**: The LLM rates each variant on quality, relevance, engagement, clarity, and call-to-action. A composite score is calculated for each, and the best-scoring variant is selected automatically. The scores for the best variant are printed in the terminal for transparency.
-- **ScoreAndFeedback**: Another LLM (the "judge") evaluates the selected tweet, scoring it from 0.0–1.0 and deciding if it should be 'approved' or retried. If not approved, the workflow loops back to generate new variants.
-- **GenerateLinkedInVariant**: The best tweet is transformed into a LinkedIn post, tailored for the platform and audience, using the LLM and the same inspiration examples.
-- **END**: The workflow finishes and results are displayed in the UI.
-
-
-### Graph State Fields
-
-The workflow state (`ContentState`) tracks all information as it moves through the graph:
-
-- `theme`: The main topic or theme for content generation (refined by LLM).
-- `variant_ideas`: List of generated tweet variants.
-- `top_performers`: List of top-performing tweets retrieved from memory.
-- `selected_idea`: The best tweet variant, selected by LLM-based scoring.
-- `linkedin_variant`: The LinkedIn post generated from the best tweet.
-- `user_feedback`: (Reserved for future use) User feedback on the result.
-- `score`: The score assigned by the LLM judge (0.0–1.0).
-- `status`: Whether the result is 'approved' or needs a 'retry'.
-- `token_count`: Total tokens used in the workflow run (for cost tracking).
-- `price_usd`: Estimated price in USD for the run.
+### 2. Social Content Graph
+- **Input:** Selected topic or user input + summarized insights.
+- **Steps:**
+  1. Generate 4 platform-specific posts in a single LLM call (JSON output).
+  2. Score each post via 4 personas (16 judgments total).
+  3. Aggregate scores; trigger refinement loop if below threshold.
+  4. Store refined drafts in history and finalize best variant.
+  5. Display summary + detailed breakdown per platform.
 
 ---
 
 ## Installation
 
-### 1. Clone the repository
-```sh
-git clone https://github.com/TuringCollegeSubmissions/mwange-AE.3.5.git
-cd mwange-AE.3.5
+```bash
+git clone <repo-url>
+cd ai-social-content-generator
+pip install -r requirements.txt
 ```
 
-### 2. Install dependencies (using pyproject.toml)
-- **Recommended:**
-  ```sh
-  python -m pip install -e .
-  ```
-
-### 3. Set up environment variables
-Create a `.env` file in the project root with your API keys:
+**Environment variables (set in `.env`):**
 ```
-OPENAI_API_KEY=sk-...
-GOOGLE_API_KEY=your-gemini-key
+OPENAI_API_KEY=your-key
 ```
 
 ---
 
-## Usage
+## Running the App
 
-1. **Start the app:**
-   ```sh
-   streamlit run app.py
-   ```
-2. **Configure the agent** in the sidebar (personality, LLM, temperature, etc.)
-3. **Pick a trending topic** or enter your own theme in the chat
-4. **Review generated tweet and LinkedIn variants**
-5. **Retry** if needed, or copy and post your favorite!
+```bash
+streamlit run app.py
+```
 
 ---
 
-## Vector Store & Twitter Metrics
+## Usage Guide
 
-The agent uses a vector database (ChromaDB) to store and retrieve top-performing tweets for inspiration. In the future, this will be powered by real Twitter metrics (likes, retweets, etc.) fetched from your own tweet history. For now, a mock tweet history with embedded metrics is used to populate the vector store. The workflow retrieves the best examples by filtering for tweets with more than 30 likes, helping guide the LLM to generate higher-quality, more engaging content. Once real Twitter data is available, the agent can be extended to fetch and update these metrics automatically.
+1. **Upload Business Info**  
+   Go to the sidebar and upload PDFs or text describing your company.  
+   The system summarizes and stores this in the vector DB.
 
-## Project Structure
+2. **Generate Market Insights**  
+   Trigger the Insights Graph to analyze trends and store structured insights.
+
+3. **Select or Input Topic**  
+   Pick from generated topics or enter your own.
+
+4. **Generate Content**  
+   The Social Content Graph creates posts for Twitter, Facebook, LinkedIn, and Instagram.
+
+5. **Scoring & Refinement**  
+   Multi-persona judging loop refines until acceptable scores are reached.
+
+6. **View Results**  
+   Summary tab gives an overview; detailed tabs show full drafts and history.
 
 ---
 
-```
-├── app.py                # Main Streamlit app
-├── src/
-│   └── agent/
-│       ├── graph.py      # LangGraph workflow
-│       ├── prompts.py    # Prompt templates
-│   └── ui/
-│       ├── sidebar.py
-│       ├── trending.py
-│       ├── chat.py
-│       └── token_counter.py
-├── static/
-│   └── graph.jpg         # Workflow graph image
-├── build/
-│   └── content_agent_graph.dot
-├── requirements.txt
-├── pyproject.toml
-├── .env
-└── README.md
-```
+## Badges & Tech
+
+- **LLM Orchestration:** LangGraph
+- **Frontend:** Streamlit
+- **Storage:** Vector DB (e.g., Chroma/FAISS)
+- **Evaluation:** LLM-as-a-Judge with multi-persona perspectives
 
 ---
 
 ## License
 
-This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
-
----
-
-## Acknowledgements
-- [Streamlit](https://streamlit.io/)
-- [LangGraph](https://github.com/langchain-ai/langgraph)
-- [OpenAI](https://openai.com/)
-- [Google Gemini](https://ai.google.dev/gemini-api)
-
----
-
-*Made with ❤️ by Mario*
+MIT License. See LICENSE for details.
