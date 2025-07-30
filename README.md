@@ -154,6 +154,14 @@ streamlit run app.py
 
 ---
 
+## App Screenshots
+
+![Insights](static/insights.png)
+![Chat](static/chat.png)
+![Summary](static/summary.png)
+![Detail Facebook](static/facebook.png)
+---
+
 ## License
 
 MIT License. See LICENSE for details.
