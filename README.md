@@ -60,9 +60,9 @@ This approach solves this by:
 ### 1. Business Insights Graph
 - **Input:** Uploaded business documents and/or provide URL.
 - **Steps:**
-  1. Extract and embed raw business data into vector DB.
-  2. Summarize insights for later use in content generation.
-  3. Store summarized insights for querying.
+1. Extract and embed raw business data into vector DB.
+2. Summarize insights for later use in content generation.
+3. Store summarized insights for querying.
 
 **Purpose:** Provides contextual knowledge for the Social Content Graph.
 
@@ -76,11 +76,11 @@ flowchart TD
 ### 2. Social Content Graph
 - **Input:** Selected topic or user input + summarized insights.
 - **Steps:**
-  1. Generate 4 platform-specific posts in a single LLM call (JSON output).
-  2. Score each post via 4 personas (16 judgments total).
-  3. Aggregate scores; trigger refinement loop if below threshold.
-  4. Store refined drafts in history and finalize best variant.
-  5. Display summary + detailed breakdown per platform.
+1. Generate 4 platform-specific posts in a single LLM call (JSON output).
+2. Score each post via 4 personas (16 judgments total).
+3. Aggregate scores; trigger refinement loop if below threshold.
+4. Store refined drafts in history and finalize best variant.
+5. Display summary + detailed breakdown per platform.
 
 ```mermaid
 flowchart TD
