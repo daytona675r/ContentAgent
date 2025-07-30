@@ -14,15 +14,21 @@ The app uses **LangGraph** to orchestrate two main processes:
 ---
 
 ## Overview
-This project is an AI-powered content creation agent designed to:
+This project is an AI-driven content creation and refinement tool designed to help businesses generate high-quality, platform-specific social media posts. Traditional content creation often results in generic, non-personalized messages that fail to engage target audiences.
 
-Generate platform-specific posts (Twitter, LinkedIn, Facebook, Instagram) from custom topics and brand insights.
+This approach solves this by:
 
-Use multi-persona scoring loops (social strategist, industry expert, target customer, investor) to refine content until high quality.
+- Extracting and summarizing business insights from uploaded documents or URLs.
 
-Pull market insights from social platforms, combine them with business data, and suggest customized trending topics.
+- Generating tailored content for multiple platforms (Twitter, LinkedIn, Facebook, Instagram).
 
-Display real-time progress during generation/refinement and summarize results in a clear UI.
+- Scoring drafts through multiple AI personas (social strategist, industry expert, customer, investor) to evaluate clarity, engagement, and relevance.
+
+- Iteratively refining low-scoring drafts until they meet quality thresholds.
+
+- Presenting a concise summary and detailed per-platform view for immediate use.
+
+- This ensures every piece of content is context-aware, brand-aligned, and optimized for engagement—significantly reducing manual work and improving output quality.
 
 ---
 
