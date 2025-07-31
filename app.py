@@ -38,7 +38,9 @@ if "final_content" not in st.session_state:
 
 
 # --- Main App ---
-st.title("🌐 AI Content Agent")
+st.subheader("🌐 PULSE")
+st.markdown("Generate and Refine Social Media Content Around Your Brand and Business Insights")
+st.divider()
 
 with st.sidebar:
     personality, model_choice, temperature, top_p = sidebar_settings()

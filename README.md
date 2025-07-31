@@ -52,6 +52,7 @@ This approach solves this by:
 - **Iterative refinement loop** until a quality threshold is reached.
 - Summarized **overview tab** + detailed per-platform tabs with refinment history for direct copy.
 - Full **real-time status updates** during graph execution using stream.
+- Token counter for **total tokens** used and the **estimated price** in usd
 
 ---
 
