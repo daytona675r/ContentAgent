@@ -5,6 +5,8 @@ from langgraph.graph import StateGraph, END
 from typing import Dict, Any, List
 from dataclasses import dataclass, field
 import json
+from langchain.schema import AIMessage
+import tiktoken
 
 from agent.prompts import PERSONA_SCORE_PROMPT, PLATFORM_CONTENT_PROMPT, REFINEMENT_PROMPT
 
@@ -25,6 +27,8 @@ class ContentState:
     top_p: float = 0.95
     model: str = "gpt-4"  # default model choice
     current_node:str= ""
+    token_count: int = 0  # Total tokens used in the graph run
+    price_usd: float = 0.0 # Estimated price in USD for the run
     
     # Generated drafts
     generated_content: Dict[str, str] = field(default_factory=dict)  # {platform: content}
@@ -92,7 +96,9 @@ def get_content_drafts(state: ContentState):
         topic=state.topic,
         insights=state.summarized_insights,
     )
-    return llm.invoke(prompt)
+    result = llm.invoke(prompt)
+    sum_tokens(state, prompt, result)
+    return result
 
 def judge_content(state: ContentState, platform: str, content: str):
     #llm = get_llm(state, temperature=state.temperature, top_p=state.top_p)
@@ -101,7 +107,9 @@ def judge_content(state: ContentState, platform: str, content: str):
         content=content,
         platform=platform
     )
-    return llm.invoke(prompt)
+    result = llm.invoke(prompt)
+    sum_tokens(state, prompt, result)
+    return result
 
 def refine_content(state: ContentState, platform: str, combined_feedback: str):
     llm = get_llm(state, temperature=state.temperature, top_p=state.top_p)
@@ -112,7 +120,30 @@ def refine_content(state: ContentState, platform: str, combined_feedback: str):
         draft=state.generated_content.get(platform, ""),
         feedback=combined_feedback,
     )
-    return llm.invoke(prompt)
+    result = llm.invoke(prompt)
+    sum_tokens(state, prompt, result)
+    return result
+
+def sum_tokens(state: ContentState,prompt:str,  msg: AIMessage):
+    total_tokens = 0
+    if hasattr(msg, 'usage_metadata') and msg.usage_metadata and 'total_tokens' in msg.usage_metadata:
+        total_tokens += msg.usage_metadata['total_tokens']
+    elif hasattr(msg, 'token_count'):
+        total_tokens += msg.token_count
+    else:
+        # Estimate tokens for prompt + response
+        total_tokens += count_tokens_gpt4(prompt) + count_tokens_gpt4(msg.content)
+    # Store tokens used so far
+    state.token_count = state.token_count + total_tokens
+    # Calculate price (OpenAI GPT-4, as of July 2025, $0.03/1K prompt, $0.06/1K completion, use $0.06/1K as upper bound)
+    state.price_usd = round((state.token_count / 1000) * 0.06, 4)
+
+def count_tokens_gpt4(text: str) -> int:
+    try:
+        enc = tiktoken.encoding_for_model("gpt-4")
+    except Exception:
+        enc = tiktoken.get_encoding("cl100k_base")
+    return len(enc.encode(text))
 
 # ---------------------------
 # NODES

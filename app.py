@@ -71,37 +71,12 @@ with tabs[1]:  # Chat Agent
         st.session_state.chat_history.append({"role": "user", "content": user_input})
 
         final_state=run_content_generation(user_input)
-        # # Initialize state with topic + insights
-        # insights = " ".join(get_market_insights())
-        # business_info = " ".join(get_business_info())
-        # state = ContentState(
-        #     topic=user_input,
-        #     summarized_insights=insights,
-        #     business_info=business_info,
-        #     final_content={}
-        # )
-
-        # # Invoke the content generation graph
-        # with st.spinner("Generating content..."):
-        #     final_state = social_content_graph.invoke(state)
-
-        # with st.spinner("Generating tweet variants..."):
-        #     result = contentGraph.invoke({
-        #         "theme": user_input,
-        #         "personality": personality.lower() if personality else "smart-casual",
-        #         "model_choice": model_choice,
-        #         "temperature": temperature,
-        #         "top_p": top_p
-        #     })
-        # final_tweet = result.get("selected_idea", "No tweet generated.")
-        # linkedInVariant = result.get("linkedin_variant", "No LinkedIn variant generated.")
-        # agent_message = f"Here's your best tweet variant:\n\n> {final_tweet})"
-        # st.session_state.chat_history.append({"role": "agent", "content": agent_message})
-        # st.session_state.last_linkedin_variant = linkedInVariant
+       
         if final_state:
             st.session_state.final_state = final_state
             st.session_state.chat_history.append({"role": "agent", "content": "Your content is generated successfully! Look at the summary tab for details."})
-            
+            st.session_state["input"] = ""  # Clear chat input if your input uses key="input"
+            st.session_state["selected_market_topic"] = None  # Deselect the radio button
         st.rerun()
 
     # Display chat history (reverse for newest at bottom)
@@ -110,9 +85,9 @@ with tabs[1]:  # Chat Agent
     # --- Retry Button ---
     retry_button(personality, model_choice, temperature, top_p, contentGraph)
 
-    # Floating window for token/price info only (bottom right, 1/10 of window width)
-    # if hasattr(st.session_state, "final_state") and st.session_state.final_state:
-    #     floating_token_box(st.session_state.final_state)
+    #Floating window for token/price info only (bottom right, 1/10 of window width)
+    if hasattr(st.session_state, "final_state") and st.session_state.final_state:
+        floating_token_box(st.session_state.final_state)
 
 with tabs[2]:  
     summary_tab()
