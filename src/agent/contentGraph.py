@@ -306,3 +306,6 @@ contentGraph = workflow.compile()
 #final_state = graph.invoke({**initial_state,"theme": "Launching profitable AI solopreneur tools"})
 #print("\n✅ Final Result:")
 #print(final_state)  # Contains theme, all variants, selected, and feedback
+
+# Backward-compatible name for existing callers and tests.
+graph = contentGraph
