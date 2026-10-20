@@ -27,7 +27,11 @@ def parse_drafts(raw: str) -> dict[str, dict[str, str]]:
     drafts: dict[str, dict[str, str]] = {}
     for platform in PLATFORMS:
         item = value.get(platform)
-        if not isinstance(item, dict) or not isinstance(item.get("post"), str) or not item["post"].strip():
+        if (
+            not isinstance(item, dict)
+            or not isinstance(item.get("post"), str)
+            or not item["post"].strip()
+        ):
             raise ContractError(f"missing generated post for {platform}")
         drafts[platform] = {"post": item["post"].strip()}
     return drafts
@@ -43,5 +47,8 @@ def parse_scores(raw: str) -> dict[str, dict[str, Any]]:
             raise ContractError(f"invalid score for {persona}")
         if not 0 <= float(score["score"]) <= 10:
             raise ContractError(f"score out of range for {persona}")
-        result[persona] = {"score": float(score["score"]), "feedback": str(score.get("feedback", ""))}
+        result[persona] = {
+            "score": float(score["score"]),
+            "feedback": str(score.get("feedback", "")),
+        }
     return result

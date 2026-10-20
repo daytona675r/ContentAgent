@@ -20,6 +20,7 @@ SCORES_HIGH = {"strategist": {"score": 9, "feedback": "accepted"}}
 
 def response(payload):
     import json
+
     return SimpleNamespace(content=json.dumps(payload))
 
 
@@ -29,25 +30,40 @@ def state():
 
 def test_generation_scoring_acceptance(monkeypatch):
     s = state()
-    monkeypatch.setattr("agent.social_content_graph.get_content_drafts", lambda _: response(DRAFTS))
-    monkeypatch.setattr("agent.social_content_graph.judge_content", lambda *_: response(SCORES_HIGH))
-    generate_content_node(s); score_personas_node(s); aggregate_scores_node(s)
+    monkeypatch.setattr(
+        "agent.social_content_graph.get_content_drafts", lambda _: response(DRAFTS)
+    )
+    monkeypatch.setattr(
+        "agent.social_content_graph.judge_content", lambda *_: response(SCORES_HIGH)
+    )
+    generate_content_node(s)
+    score_personas_node(s)
+    aggregate_scores_node(s)
     assert check_refinement_node(s) == "finalize"
     finalize_content_node(s)
     assert set(s.final_content) == set(DRAFTS)
 
 
 def test_generation_refinement_rescore(monkeypatch):
-    s = state(); calls = {"score": 0}
-    monkeypatch.setattr("agent.social_content_graph.get_content_drafts", lambda _: response(DRAFTS))
+    s = state()
+    calls = {"score": 0}
+    monkeypatch.setattr(
+        "agent.social_content_graph.get_content_drafts", lambda _: response(DRAFTS)
+    )
     def judge(*_):
         calls["score"] += 1
         return response(SCORES_LOW if calls["score"] == 1 else SCORES_HIGH)
     monkeypatch.setattr("agent.social_content_graph.judge_content", judge)
-    monkeypatch.setattr("agent.social_content_graph.refine_content", lambda *_: response({"post": "refined"}))
-    generate_content_node(s); score_personas_node(s); aggregate_scores_node(s)
+    monkeypatch.setattr(
+        "agent.social_content_graph.refine_content", lambda *_: response({"post": "refined"})
+    )
+    generate_content_node(s)
+    score_personas_node(s)
+    aggregate_scores_node(s)
     assert check_refinement_node(s) == "refine"
-    refine_content_node(s); score_personas_node(s); aggregate_scores_node(s)
+    refine_content_node(s)
+    score_personas_node(s)
+    aggregate_scores_node(s)
     assert check_refinement_node(s) == "finalize"
     assert calls["score"] == 8
 
