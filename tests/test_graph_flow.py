@@ -47,6 +47,7 @@ def test_generation_refinement_rescore(monkeypatch):
     s = state()
     calls = {"score": 0}
     monkeypatch.setattr("agent.social_content_graph.get_content_drafts", lambda _: response(DRAFTS))
+
     def judge(*_):
         calls["score"] += 1
         return response(SCORES_LOW if calls["score"] == 1 else SCORES_HIGH)
@@ -68,6 +69,7 @@ def test_generation_refinement_rescore(monkeypatch):
 def test_malformed_generation_is_explicit() -> None:
     with pytest.raises(ContractError):
         from agent.contracts import parse_drafts
+
         parse_drafts("{}")
 
 
