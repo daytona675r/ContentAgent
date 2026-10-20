@@ -1,12 +1,7 @@
-import pytest
+from langgraph.pregel import Pregel
 
-from agent import contentGraph
-
-pytestmark = pytest.mark.anyio
+from agent.contentGraph import graph as contentGraph
 
 
-@pytest.mark.langsmith
-async def test_agent_simple_passthrough() -> None:
-    inputs = {"changeme": "some_val"}
-    res = await contentGraph.ainvoke(inputs)
-    assert res is not None
+def test_legacy_graph_compiles_without_provider_calls() -> None:
+    assert isinstance(contentGraph, Pregel)
