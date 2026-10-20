@@ -1,6 +1,6 @@
 import json
 import random
-from datetime import datetime, timedelta
+from datetime import UTC, datetime, timedelta
 
 # Mock themes and styles
 themes = ["Startup Building", "Solopreneur Tactics", "AI Productivity", "Prompt Engineering", "No-Code AI"]
@@ -11,8 +11,8 @@ styles = ["listicle", "thread", "one-liner", "case study"]
 def generate_tweet_text(theme):
     starters = [
         f"Why most {theme.lower()} ideas fail (and what to do instead)",
-        f"3 lessons I learned from building an AI-first tool",
-        f"The solopreneur's roadmap for launching with AI",
+        "3 lessons I learned from building an AI-first tool",
+        "The solopreneur's roadmap for launching with AI",
         f"A quick breakdown of {theme.lower()} success",
         f"AI isn’t enough: {theme.lower()} needs this too"
     ]
@@ -27,7 +27,7 @@ def generate_mock_tweet(i, date_offset):
     replies = random.randint(0, 10)
     impressions = likes * 30 + random.randint(-100, 200)
 
-    date = (datetime.today() - timedelta(days=date_offset)).strftime("%Y-%m-%d")
+    date = (datetime.now(UTC) - timedelta(days=date_offset)).strftime("%Y-%m-%d")
     time_posted = f"{random.randint(7, 22)}:{random.choice(['00', '15', '30', '45'])}"
 
     return {

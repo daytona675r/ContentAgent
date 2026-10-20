@@ -1,5 +1,6 @@
 import streamlit as st
 
+
 def twitter_tab():
     st.header("Twitter Content")
     final_state = getattr(st.session_state, "final_state", None)
@@ -50,5 +51,4 @@ def twitter_tab():
                 st.markdown(refinement["post"])
                 st.markdown(refinement["hashtags"])
         
-
 

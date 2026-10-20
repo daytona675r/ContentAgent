@@ -1,7 +1,8 @@
 import json
-from langchain.vectorstores import Chroma
+
 from langchain.embeddings import OpenAIEmbeddings
 from langchain.schema import Document
+from langchain.vectorstores import Chroma
 
 # Initialize Chroma vectorstore
 chroma_store = Chroma(
