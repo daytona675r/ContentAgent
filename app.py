@@ -12,17 +12,17 @@ if os.getenv("DEMO_MODE", "").lower() in {"1", "true", "yes", "on"}:
 
 from agent.social_content_graph import social_content_graph
 from agent.social_content_graph import ContentState
-from src.agent.contentGraph import contentGraph
+from agent.contentGraph import contentGraph
 from langgraph.graph import StateGraph
 from typing import TypedDict, List
 from tools.business_info import get_business_info
 from tools.insights import get_market_insights
 from tools.trending import get_trending_topics
-from src.ui.sidebar import sidebar_settings
-from src.ui.trending import market_insights_topics_section
-from src.ui.chat import chat_input_area, chat_history_area, retry_button
-from src.ui.token_counter import floating_token_box
-from src.ui.insights import market_insights_tab
+from ui.sidebar import sidebar_settings
+from ui.trending import market_insights_topics_section
+from ui.chat import chat_input_area, chat_history_area, retry_button
+from ui.token_counter import floating_token_box
+from ui.insights import market_insights_tab
 from ui.content_worker import run_content_generation
 from ui.facebook import facebook_tab
 from ui.instagram import instagram_tab

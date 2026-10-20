@@ -41,11 +41,13 @@ langchain_google_genai.GoogleGenerativeAI.api_key = os.getenv("GOOGLE_API_KEY")
 
 
 # --- Vector DB Setup ---
-tweet_store = Chroma(
-    collection_name="tweet_history",
-    embedding_function=OpenAIEmbeddings(),
-    persist_directory="./chroma_db"
-)
+tweet_store = None
+if os.getenv("OPENAI_API_KEY"):
+    tweet_store = Chroma(
+        collection_name="tweet_history",
+        embedding_function=OpenAIEmbeddings(),
+        persist_directory="./chroma_db",
+    )
 
 # --- Define LangGraph State ---
 
@@ -79,7 +81,8 @@ def store_top_performer(tweet: str, metadata: dict = None):
     if metadata is None:
         metadata = {"source": "agent", "score": 0.90}
     doc = Document(page_content=tweet, metadata=metadata)
-    tweet_store.add_documents([doc])
+    if tweet_store is not None:
+        tweet_store.add_documents([doc])
 
 
 
@@ -128,7 +131,7 @@ def memory_retriever(state: ContentState):
     print("📚 Retrieving top-performing tweets from memory...")
     query = state["theme"]
      # Search the vectorstore
-    results = tweet_store.similarity_search(query, k=10)  # Get more for filtering
+    results = tweet_store.similarity_search(query, k=10) if tweet_store is not None else []  # Get more for filtering
     
     # Filter by likes > 30
     top_performers = []

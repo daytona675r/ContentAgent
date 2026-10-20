@@ -16,7 +16,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - run: pip install -r requirements.txt pytest ruff
-      - run: ruff check demo_mode.py tests/test_demo_mode.py
-      - run: python -m pytest -q tests/test_demo_mode.py
+      - run: pip install -e . pytest ruff
+      - run: ruff check src tests app.py demo_mode.py
+      - run: ruff format --check src tests app.py demo_mode.py
+      - run: python -m pytest -q
+      - run: python -c "from agent.social_content_graph import social_content_graph; print(type(social_content_graph).__name__)"
+      - run: DEMO_MODE=1 python -c "import demo_mode; assert demo_mode.DEMO_OUTPUTS"
       - run: python -m py_compile app.py demo_mode.py
