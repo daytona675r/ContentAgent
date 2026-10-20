@@ -51,6 +51,7 @@ def test_generation_refinement_rescore(monkeypatch):
     def judge(*_):
         calls["score"] += 1
         return response(SCORES_LOW if calls["score"] == 1 else SCORES_HIGH)
+
     monkeypatch.setattr("agent.social_content_graph.judge_content", judge)
     monkeypatch.setattr(
         "agent.social_content_graph.refine_content", lambda *_: response({"post": "refined"})
