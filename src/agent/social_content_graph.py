@@ -9,6 +9,7 @@ from langchain.schema import AIMessage
 import tiktoken
 
 from agent.prompts import PERSONA_SCORE_PROMPT, PLATFORM_CONTENT_PROMPT, REFINEMENT_PROMPT
+from agent.contracts import ContractError, parse_drafts, parse_object, parse_scores
 
 MAX_REFINEMENTS = 1
 THRESHOLD_SCORE = 8
@@ -125,6 +126,7 @@ def refine_content(state: ContentState, platform: str, combined_feedback: str):
     return result
 
 def sum_tokens(state: ContentState,prompt:str,  msg: AIMessage):
+    """Sum tokens used in the prompt and response, and update state."""
     total_tokens = 0
     if hasattr(msg, 'usage_metadata') and msg.usage_metadata and 'total_tokens' in msg.usage_metadata:
         total_tokens += msg.usage_metadata['total_tokens']
@@ -152,13 +154,12 @@ def count_tokens_gpt4(text: str) -> int:
 # 1. Generate content drafts per platform
 def generate_content_node(state: ContentState):
     state.current_node = "generate_content_node"
-    json_content = json.loads(get_content_drafts(state).content)
-    state.generated_content = {
-        "twitter": json_content.get("twitter", ""),
-        "facebook": json_content.get("facebook", ""),
-        "linkedin": json_content.get("linkedin", ""),
-        "instagram": json_content.get("instagram", "")
-    }
+    try:
+        state.generated_content = parse_drafts(get_content_drafts(state).content)
+    except ContractError as exc:
+        state.generated_content = {}
+        state.current_node = f"generate_content_error: {exc}"
+        return state
     # Initialize refinement history
     for platform in state.generated_content:
         state.refinement_history[platform] = [state.generated_content[platform]["post"]]
@@ -175,7 +176,12 @@ def score_personas_node(state: ContentState):
         state.persona_scores[platform] = {}
         # Call LLM to score + feedback
         score_feedback = judge_content(state, platform, content["post"])
-        json_feedback=json.loads(score_feedback.content)
+        try:
+            json_feedback = parse_scores(score_feedback.content)
+        except ContractError as exc:
+            state.persona_scores[platform] = {"system": {"score": 0.0, "feedback": str(exc)}}
+            updated_scores[platform] = state.persona_scores[platform]
+            continue
         updated_scores[platform] = json_feedback
         state.persona_scores = updated_scores
     return state
@@ -217,8 +223,10 @@ def refine_content_node(state: ContentState):
             )
 
             # Call LLM for refined content
-            refined_content=refine_content(state, platform, combined_feedback).content
-            json_content = json.loads(refined_content)
+            refined_content = refine_content(state, platform, combined_feedback).content
+            json_content = parse_object(refined_content)
+            if not isinstance(json_content.get("post"), str) or not json_content["post"].strip():
+                raise ContractError(f"invalid refinement for {platform}")
 
 
             # Update state
