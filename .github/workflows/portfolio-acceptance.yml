@@ -1,0 +1,26 @@
+name: Portfolio Acceptance
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  acceptance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install project and acceptance tools
+        run: pip install -e . pytest ruff
+
+      - name: Run immutable portfolio acceptance
+        run: bash scripts/portfolio_acceptance.sh
