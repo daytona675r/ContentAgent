@@ -1,4 +1,10 @@
-from demo_mode import DEMO_CONTEXT, DEMO_NOTICE, DEMO_OUTPUTS, DEMO_REFINEMENT, DEMO_SCORES
+from demo_mode import (
+    DEMO_CONTEXT,
+    DEMO_NOTICE,
+    DEMO_OUTPUTS,
+    DEMO_REFINEMENT,
+    DEMO_SCORES,
+)
 
 
 def test_demo_payload_is_deterministic_and_labelled():
