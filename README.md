@@ -106,8 +106,19 @@ flowchart TD
 git clone <https://github.com/daytona675r/ContentAgent>
 cd ContentAgent
 python3 -m venv venv
-pip install 
+pip install -r requirements.txt
 ```
+
+The supported runtime is Python 3.11+. For a credential-free portfolio
+preview, run the deterministic replay UI:
+
+```bash
+DEMO_MODE=1 streamlit run app.py
+```
+
+Demo mode labels sample context, platform drafts and persona scores as
+replayed data. It makes no OpenAI, Google or Tavily request. Real mode remains
+local/private and reads provider credentials from environment variables.
 
 **Environment variables (set in `.env`):**
 ```

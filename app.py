@@ -2,6 +2,13 @@
 
 import requests
 import streamlit as st
+import os
+
+if os.getenv("DEMO_MODE", "").lower() in {"1", "true", "yes", "on"}:
+    from demo_mode import render_demo
+
+    render_demo(st)
+    st.stop()
 
 from agent.social_content_graph import social_content_graph
 from agent.social_content_graph import ContentState
