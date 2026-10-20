@@ -71,7 +71,9 @@ def test_malformed_generation_is_explicit():
 
 
 def test_refinement_is_bounded():
-    s = state(); s.aggregated_scores = {"twitter": 1}; s.persona_scores = {"twitter": SCORES_LOW}
+    s = state()
+    s.aggregated_scores = {"twitter": 1}
+    s.persona_scores = {"twitter": SCORES_LOW}
     assert check_refinement_node(s) == "refine"
     s.refinement_loops = {k: 1 for k in s.refinement_loops}
     assert check_refinement_node(s) == "finalize"
