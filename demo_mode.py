@@ -11,6 +11,11 @@ DEMO_OUTPUTS = {
     "Instagram": "Context first. Channel second. Make the customer problem clear before polishing the post.",
 }
 DEMO_SCORES = {"Strategist": 8.6, "Customer": 8.2, "Industry expert": 8.4, "Investor": 7.9}
+DEMO_REFINEMENT = {
+    "initial": "A generic post about solving customer problems.",
+    "feedback": "Make the customer context and practical next step explicit.",
+    "accepted": DEMO_OUTPUTS["LinkedIn"],
+}
 
 
 def render_demo(st) -> None:
@@ -27,4 +32,8 @@ def render_demo(st) -> None:
             st.caption("Replayed demo output · no live model call")
     st.subheader("Multi-persona evaluation")
     st.bar_chart(DEMO_SCORES)
+    st.subheader("Refinement history")
+    st.markdown(f"**Initial draft**  \n{DEMO_REFINEMENT['initial']}")
+    st.markdown(f"**Persona feedback**  \n{DEMO_REFINEMENT['feedback']}")
+    st.markdown(f"**Accepted refinement**  \n{DEMO_REFINEMENT['accepted']}")
     st.caption("Example scores and token/cost values are simulated for the demo.")
