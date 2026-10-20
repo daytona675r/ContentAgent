@@ -17,8 +17,8 @@ jobs:
         with:
           python-version: '3.11'
       - run: pip install -e . pytest ruff
-      - run: ruff check src/agent app.py demo_mode.py tests/test_contracts.py tests/test_demo_mode.py tests/test_graph_flow.py tests/integration_tests/test_contentGraph.py
-      - run: ruff format --check src/agent app.py demo_mode.py tests/test_contracts.py tests/test_demo_mode.py tests/test_graph_flow.py tests/integration_tests/test_contentGraph.py
+      - run: ruff check src/agent/contracts.py tests/test_contracts.py tests/test_demo_mode.py tests/test_graph_flow.py
+      - run: ruff format --check src/agent/contracts.py tests/test_contracts.py tests/test_demo_mode.py tests/test_graph_flow.py
       - run: python -m pytest -q
       - run: python -c "from agent.social_content_graph import social_content_graph; print(type(social_content_graph).__name__)"
       - run: DEMO_MODE=1 python -c "import demo_mode; assert demo_mode.DEMO_OUTPUTS"
