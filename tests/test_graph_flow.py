@@ -30,9 +30,7 @@ def state():
 
 def test_generation_scoring_acceptance(monkeypatch):
     s = state()
-    monkeypatch.setattr(
-        "agent.social_content_graph.get_content_drafts", lambda _: response(DRAFTS)
-    )
+    monkeypatch.setattr("agent.social_content_graph.get_content_drafts", lambda _: response(DRAFTS))
     monkeypatch.setattr(
         "agent.social_content_graph.judge_content", lambda *_: response(SCORES_HIGH)
     )
@@ -47,9 +45,7 @@ def test_generation_scoring_acceptance(monkeypatch):
 def test_generation_refinement_rescore(monkeypatch):
     s = state()
     calls = {"score": 0}
-    monkeypatch.setattr(
-        "agent.social_content_graph.get_content_drafts", lambda _: response(DRAFTS)
-    )
+    monkeypatch.setattr("agent.social_content_graph.get_content_drafts", lambda _: response(DRAFTS))
     def judge(*_):
         calls["score"] += 1
         return response(SCORES_LOW if calls["score"] == 1 else SCORES_HIGH)
