@@ -10,7 +10,6 @@ from langchain_openai import ChatOpenAI, OpenAIEmbeddings  # Add this import
 from langchain_community.vectorstores import Chroma  # Import Chroma
 import langchain_google_genai  # Import Google Generative AI
 
-from langchain.prompts import PromptTemplate  # Import PromptTemplate
 from src.agent.prompts import TWITTER_PROMPT_BASE, LINKEDIN_PROMPT_BASE, LLM_JUDGE_PROMPT, THEME_REFINER_PROMPT, LLM_VARIANT_SCORER_PROMPT  # Import prompts
 from langchain_core.documents import Document  # Import Document
 import tiktoken

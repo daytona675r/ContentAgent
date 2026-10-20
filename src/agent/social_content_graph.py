@@ -5,7 +5,7 @@ from langgraph.graph import StateGraph, END
 from typing import Dict, Any, List
 from dataclasses import dataclass, field
 import json
-from langchain.schema import AIMessage
+from langchain_core.messages import AIMessage
 import tiktoken
 
 from agent.prompts import PERSONA_SCORE_PROMPT, PLATFORM_CONTENT_PROMPT, REFINEMENT_PROMPT
