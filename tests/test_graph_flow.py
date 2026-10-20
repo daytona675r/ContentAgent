@@ -43,6 +43,7 @@ def test_generation_scoring_acceptance(monkeypatch):
 
 
 def test_generation_refinement_rescore(monkeypatch):
+    """A low score triggers one bounded refinement before finalization."""
     s = state()
     calls = {"score": 0}
     monkeypatch.setattr("agent.social_content_graph.get_content_drafts", lambda _: response(DRAFTS))
@@ -64,7 +65,7 @@ def test_generation_refinement_rescore(monkeypatch):
     assert calls["score"] == 8
 
 
-def test_malformed_generation_is_explicit():
+def test_malformed_generation_is_explicit() -> None:
     with pytest.raises(ContractError):
         from agent.contracts import parse_drafts
         parse_drafts("{}")
