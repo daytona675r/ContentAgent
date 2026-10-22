@@ -1,6 +1,6 @@
 # PULSE
 
-![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
+![Python](https://img.shields.io/badge/Python-3.11%2B-blue)
 ![Streamlit](https://img.shields.io/badge/Framework-Streamlit-FF4B4B)
 ![LangGraph](https://img.shields.io/badge/AI-Agents%20via%20LangGraph-7A3E9D)
 ![License](https://img.shields.io/badge/License-MIT-green)
@@ -103,7 +103,7 @@ flowchart TD
 ## Installation
 
 ```bash
-git clone <https://github.com/daytona675r/ContentAgent>
+git clone https://github.com/daytona675r/ContentAgent.git
 cd ContentAgent
 python3 -m venv venv
 pip install -r requirements.txt
