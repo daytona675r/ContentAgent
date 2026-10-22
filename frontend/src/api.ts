@@ -11,7 +11,10 @@ export type DemoRun = {
   token_cost: { tokens: number; estimated_usd: number };
 };
 
-const baseUrl = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:8000";
+const configuredBaseUrl = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:8000";
+const baseUrl = configuredBaseUrl.startsWith("http")
+  ? configuredBaseUrl
+  : `https://${configuredBaseUrl}`;
 
 async function request<T>(path: string, options?: RequestInit): Promise<T> {
   const response = await fetch(`${baseUrl}${path}`, {

@@ -1,0 +1,30 @@
+services:
+  - type: web
+    name: pulse-demo-api
+    runtime: python
+    region: frankfurt
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn api.main:app --host 0.0.0.0 --port "$PORT"
+    healthCheckPath: /health
+    envVars:
+      - key: DEMO_MODE
+        value: "true"
+      - key: PULSE_ALLOWED_ORIGINS
+        fromService:
+          type: static_site
+          name: pulse-demo-web
+          property: url
+
+  - type: static_site
+    name: pulse-demo-web
+    region: frankfurt
+    buildCommand: npm ci && npm run build
+    rootDir: frontend
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_BASE_URL
+        fromService:
+          type: web
+          name: pulse-demo-api
+          property: host

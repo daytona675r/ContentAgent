@@ -142,6 +142,15 @@ The public demo uses replayed data only; provider credentials remain server-side
 and are never sent to browser code. The Streamlit surface remains available as
 the legacy local UI.
 
+### Render deployment
+
+[`render.yaml`](render.yaml) defines a free Frankfurt Blueprint with a FastAPI
+demo service and a React static site. The services run deterministic replay
+data only and require no provider credentials. Render may suspend free-tier
+services after inactivity. After connecting the Blueprint, verify both public
+URLs with `API_URL=... FRONTEND_URL=... scripts/deployment_smoke.sh`; the
+repository does not publish a URL until the owner creates the Render services.
+
 **Environment variables (set in `.env`):**
 ```
 OPENAI_API_KEY=your-key
