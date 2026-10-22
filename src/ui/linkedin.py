@@ -1,5 +1,6 @@
 import streamlit as st
 
+
 def linkedin_tab():
     st.header("LinkedIn Content")
     final_state = getattr(st.session_state, "final_state", None)
@@ -22,7 +23,7 @@ def linkedin_tab():
             content = final_state["final_content"].get("linkedin", {})
         else:
             content = {}
-        
+
         post = content.get("post", "No LinkedIn content available.")
         hastags = content.get("hashtags", "No LinkedIn hastags available.")
         st.markdown(post)
@@ -40,7 +41,7 @@ def linkedin_tab():
         st.markdown("---")
         st.subheader("Refinement History")
 
-         # Show initial draft explicitly
+        # Show initial draft explicitly
         st.markdown("**Initial Draft:**")
         st.markdown(refinements[0])
 
@@ -49,5 +50,3 @@ def linkedin_tab():
                 st.markdown(f"**Refinement {idx}:**")
                 st.markdown(refinement["post"])
                 st.markdown(refinement["hashtags"])
-
-    

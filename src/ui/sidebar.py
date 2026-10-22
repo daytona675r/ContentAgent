@@ -1,8 +1,9 @@
 import streamlit as st
 
+
 def sidebar_settings():
     st.header("⚙️ Agent Settings")
-    personality = st.selectbox("Personality", [ "Concise", "Friendly", "Formal"])
+    personality = st.selectbox("Personality", ["Concise", "Friendly", "Formal"])
     model_choice = st.selectbox("LLM", ["OpenAI GPT-4.5", "Gemini 1.5 Pro"])
     st.markdown("### Model Settings")
     temperature = st.slider("Temperature", 0.0, 1.5, 0.8, 0.05)

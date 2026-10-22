@@ -15,7 +15,7 @@ def twitter_tab():
 
     if agg_scores is not None:
         st.markdown(f"**🎯Aggretated Score:** {agg_scores}")
-        
+
     with st.container(height=200):
         if hasattr(final_state, "final_content"):
             twitter_content = final_state.final_content.get("twitter", {})
@@ -23,13 +23,13 @@ def twitter_tab():
             twitter_content = final_state["final_content"].get("twitter", {})
         else:
             twitter_content = {}
-        
+
         twitter_post = twitter_content.get("post", "No Twitter content available.")
         twitter_hastags = twitter_content.get("hashtags", "No Twitter hastags available.")
         st.markdown(twitter_post)
         st.markdown(f"**{twitter_hastags}**")
 
-    # Show refinement history 
+    # Show refinement history
     if hasattr(final_state, "refinement_history"):
         refinements = final_state.refinement_history.get("twitter", [])
     elif isinstance(final_state, dict) and "refinement_history" in final_state:
@@ -41,7 +41,7 @@ def twitter_tab():
         st.markdown("---")
         st.subheader("Refinement History")
 
-         # Show initial draft explicitly
+        # Show initial draft explicitly
         st.markdown("**Initial Draft:**")
         st.markdown(refinements[0])
 
@@ -50,5 +50,3 @@ def twitter_tab():
                 st.markdown(f"**Refinement {idx}:**")
                 st.markdown(refinement["post"])
                 st.markdown(refinement["hashtags"])
-        
-

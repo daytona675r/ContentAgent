@@ -1,18 +1,19 @@
 import os
-import langchain_google_genai
-from langchain_openai import ChatOpenAI
-from langgraph.graph import StateGraph, END
-from typing import Dict, Any, List
 from dataclasses import dataclass, field
-import json
-from langchain_core.messages import AIMessage
-import tiktoken
+from typing import Any
 
-from agent.prompts import PERSONA_SCORE_PROMPT, PLATFORM_CONTENT_PROMPT, REFINEMENT_PROMPT
+import langchain_google_genai
+import tiktoken
+from langchain_core.messages import AIMessage
+from langchain_openai import ChatOpenAI
+from langgraph.graph import END, StateGraph
+
 from agent.contracts import ContractError, parse_drafts, parse_object, parse_scores
+from agent.prompts import PERSONA_SCORE_PROMPT, PLATFORM_CONTENT_PROMPT, REFINEMENT_PROMPT
 
 MAX_REFINEMENTS = 1
 THRESHOLD_SCORE = 8
+
 
 # ---------------------------
 # STATE DEFINITION
@@ -27,31 +28,35 @@ class ContentState:
     temperature: float = 0.8
     top_p: float = 0.95
     model: str = "gpt-4"  # default model choice
-    current_node:str= ""
+    current_node: str = ""
     token_count: int = 0  # Total tokens used in the graph run
-    price_usd: float = 0.0 # Estimated price in USD for the run
-    
+    price_usd: float = 0.0  # Estimated price in USD for the run
+
     # Generated drafts
-    generated_content: Dict[str, str] = field(default_factory=dict)  # {platform: content}
-    
+    generated_content: dict[str, str] = field(default_factory=dict)  # {platform: content}
+
     # Persona scoring
-    persona_scores: Dict[str, Dict[str, Any]] = field(default_factory=dict)
+    persona_scores: dict[str, dict[str, Any]] = field(default_factory=dict)
     # Example: {"twitter": {"strategist": {"score": 7, "feedback": "..."} }}
-    
-    aggregated_scores: Dict[str, Any] = field(default_factory=dict)  # aggregated metrics per platform
-    
+
+    aggregated_scores: dict[str, Any] = field(
+        default_factory=dict
+    )  # aggregated metrics per platform
+
     # Refinement tracking
-    refinement_history: Dict[str, List[str]] = field(default_factory=dict)  # iterations per platform
-    
-    refinement_loops: dict = field(default_factory=lambda: {
-        "twitter": 0, "facebook": 0, "linkedin": 0, "instagram": 0
-    })
+    refinement_history: dict[str, list[str]] = field(
+        default_factory=dict
+    )  # iterations per platform
+
+    refinement_loops: dict = field(
+        default_factory=lambda: {"twitter": 0, "facebook": 0, "linkedin": 0, "instagram": 0}
+    )
 
     low_score_platforms: list = field(default_factory=list)
 
     # Final chosen content
-    final_content: Dict[str, str] = field(default_factory=dict)
-    
+    final_content: dict[str, str] = field(default_factory=dict)
+
     def to_dict(self):
         """Convert state to dict for storage/UI rendering."""
         return {
@@ -65,35 +70,38 @@ class ContentState:
             "refinement_history": self.refinement_history,
             "final_content": self.final_content,
         }
+
     @classmethod
     def from_dict(cls, data):
         return cls(**data)
 
-#LLM Helpers
+
+# LLM Helpers
 
 # Initialize OpenAI client
 ChatOpenAI.api_key = os.getenv("OPENAI_API_KEY")
 # Set Google API key for Gemini
 langchain_google_genai.GoogleGenerativeAI.api_key = os.getenv("GOOGLE_API_KEY")
 
+
 # --- LLM Selection Helper ---
 def get_llm(state: ContentState, temperature: float = 0.8, top_p: float = 0.95):
     model_choice = state.model
     # Map UI model names to API model names
-    model_map = {
-        "openai gpt-4.5": "gpt-4.5",
-        "gemini 1.5 pro": "gemini-1.5-pro"
-    }
+    model_map = {"openai gpt-4.5": "gpt-4.5", "gemini 1.5 pro": "gemini-1.5-pro"}
     model_name = model_map.get(model_choice.lower(), "gpt-4")
     if model_name.startswith("gpt-"):
         return ChatOpenAI(model_name=model_name, temperature=temperature, top_p=top_p)
     else:
-        return langchain_google_genai.ChatGoogleGenerativeAI(model=model_name, temperature=temperature, top_p=top_p)
+        return langchain_google_genai.ChatGoogleGenerativeAI(
+            model=model_name, temperature=temperature, top_p=top_p
+        )
+
 
 def get_content_drafts(state: ContentState):
     llm = get_llm(state, temperature=state.temperature, top_p=state.top_p)
 
-    prompt=PLATFORM_CONTENT_PROMPT.format(
+    prompt = PLATFORM_CONTENT_PROMPT.format(
         topic=state.topic,
         insights=state.summarized_insights,
     )
@@ -101,16 +109,15 @@ def get_content_drafts(state: ContentState):
     sum_tokens(state, prompt, result)
     return result
 
+
 def judge_content(state: ContentState, platform: str, content: str):
-    #llm = get_llm(state, temperature=state.temperature, top_p=state.top_p)
-    llm=ChatOpenAI(model_name="gpt-4", temperature=state.temperature, top_p=state.top_p)
-    prompt = PERSONA_SCORE_PROMPT.format(
-        content=content,
-        platform=platform
-    )
+    # llm = get_llm(state, temperature=state.temperature, top_p=state.top_p)
+    llm = ChatOpenAI(model_name="gpt-4", temperature=state.temperature, top_p=state.top_p)
+    prompt = PERSONA_SCORE_PROMPT.format(content=content, platform=platform)
     result = llm.invoke(prompt)
     sum_tokens(state, prompt, result)
     return result
+
 
 def refine_content(state: ContentState, platform: str, combined_feedback: str):
     llm = get_llm(state, temperature=state.temperature, top_p=state.top_p)
@@ -125,12 +132,17 @@ def refine_content(state: ContentState, platform: str, combined_feedback: str):
     sum_tokens(state, prompt, result)
     return result
 
-def sum_tokens(state: ContentState,prompt:str,  msg: AIMessage):
+
+def sum_tokens(state: ContentState, prompt: str, msg: AIMessage):
     """Sum tokens used in the prompt and response, and update state."""
     total_tokens = 0
-    if hasattr(msg, 'usage_metadata') and msg.usage_metadata and 'total_tokens' in msg.usage_metadata:
-        total_tokens += msg.usage_metadata['total_tokens']
-    elif hasattr(msg, 'token_count'):
+    if (
+        hasattr(msg, "usage_metadata")
+        and msg.usage_metadata
+        and "total_tokens" in msg.usage_metadata
+    ):
+        total_tokens += msg.usage_metadata["total_tokens"]
+    elif hasattr(msg, "token_count"):
         total_tokens += msg.token_count
     else:
         # Estimate tokens for prompt + response
@@ -140,16 +152,19 @@ def sum_tokens(state: ContentState,prompt:str,  msg: AIMessage):
     # Calculate price (OpenAI GPT-4, as of July 2025, $0.03/1K prompt, $0.06/1K completion, use $0.06/1K as upper bound)
     state.price_usd = round((state.token_count / 1000) * 0.06, 4)
 
+
 def count_tokens_gpt4(text: str) -> int:
     try:
         enc = tiktoken.encoding_for_model("gpt-4")
-    except Exception:
+    except Exception:  # noqa: BLE001 - tokenizer availability varies by environment
         enc = tiktoken.get_encoding("cl100k_base")
     return len(enc.encode(text))
+
 
 # ---------------------------
 # NODES
 # ---------------------------
+
 
 # 1. Generate content drafts per platform
 def generate_content_node(state: ContentState):
@@ -211,8 +226,7 @@ def check_refinement_node(state: ContentState):
 # 5. Refine content based on feedback
 def refine_content_node(state: ContentState):
     state.current_node = "refine_content_node"
-    #Refines content for platforms that scored below threshold based on persona feedback.
-    threshold = 8  # Minimum acceptable score
+    # Refines content for platforms that scored below threshold based on persona feedback.
 
     for platform, avg_score in state.aggregated_scores.items():
         if avg_score < THRESHOLD_SCORE and state.refinement_loops[platform] < MAX_REFINEMENTS:
@@ -227,7 +241,6 @@ def refine_content_node(state: ContentState):
             json_content = parse_object(refined_content)
             if not isinstance(json_content.get("post"), str) or not json_content["post"].strip():
                 raise ContractError(f"invalid refinement for {platform}")
-
 
             # Update state
             state.generated_content[platform] = json_content
@@ -244,7 +257,6 @@ def finalize_content_node(state: ContentState):
     return state
 
 
-
 # ---------------------------
 # GRAPH SETUP
 # ---------------------------
@@ -256,23 +268,20 @@ graph = StateGraph(ContentState)
 graph.add_node("generate_content", generate_content_node)
 graph.add_node("score_personas", score_personas_node)
 graph.add_node("aggregate_scores", aggregate_scores_node)
-#graph.add_node("check_refinement", check_refinement_node)
+# graph.add_node("check_refinement", check_refinement_node)
 graph.add_node("refine_content", refine_content_node)
 graph.add_node("finalize_content", finalize_content_node)
 
 # Edges: main flow
 graph.add_edge("generate_content", "score_personas")
 graph.add_edge("score_personas", "aggregate_scores")
-#graph.add_edge("aggregate_scores", "check_refinement")
+# graph.add_edge("aggregate_scores", "check_refinement")
 
 # Conditional refinement
 graph.add_conditional_edges(
     "aggregate_scores",
     check_refinement_node,  # or your lambda
-    {
-        "refine": "refine_content",
-        "finalize": "finalize_content"
-    }
+    {"refine": "refine_content", "finalize": "finalize_content"},
 )
 
 # After refinement -> back to scoring

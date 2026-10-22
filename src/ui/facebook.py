@@ -1,5 +1,6 @@
 import streamlit as st
 
+
 def facebook_tab():
     st.header("Facebook Content")
     final_state = getattr(st.session_state, "final_state", None)
@@ -22,7 +23,7 @@ def facebook_tab():
             content = final_state["final_content"].get("facebook", {})
         else:
             content = {}
-        
+
         post = content.get("post", "No Facebook content available.")
         hastags = content.get("hashtags", "No Fcebook hastags available.")
         st.markdown(post)
@@ -40,7 +41,7 @@ def facebook_tab():
         st.markdown("---")
         st.subheader("Refinement History")
 
-         # Show initial draft explicitly
+        # Show initial draft explicitly
         st.markdown("**Initial Draft:**")
         st.markdown(refinements[0])
 

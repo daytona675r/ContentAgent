@@ -1,5 +1,5 @@
 # Prompt for LLM-based scoring of tweet variants (for score_and_select)
-LLM_VARIANT_SCORER_PROMPT = '''
+LLM_VARIANT_SCORER_PROMPT = """
 You are an expert social media content strategist. Given the following tweet variants, rate each one on a scale from 0 to 10 for the following criteria:
 - Quality (writing, grammar, style)
 - Relevance to the theme: {theme}
@@ -20,8 +20,8 @@ Return a JSON list of all variants scored as above. Do not add any commentary.
 
 Tweet Variants:
 {variants}
-'''
-TWITTER_PROMPT_BASE = '''
+"""
+TWITTER_PROMPT_BASE = """
 You're an expert content strategist helping AI solopreneurs build their personal brand on Twitter/X.
 
 Write a **viral-style tweet** about the topic:  
@@ -41,9 +41,9 @@ Use these **top-performing examples** for inspiration:
 
 Respond with only the tweet — no commentary.
 You are allowed to use emojis sparingly if they fit the topic.
-'''
+"""
 
-LINKEDIN_PROMPT_BASE = '''
+LINKEDIN_PROMPT_BASE = """
 You're a startup advisor helping AI solopreneurs build their personal brand on LinkedIn.
 
 Take the following short tweet and rewrite it as a short, high-performing **LinkedIn post**:
@@ -63,9 +63,9 @@ Use the following **top-performing tweet examples** as inspiration, but expand i
 
 Respond with only the post content — no hashtags, no commentary.
 You are allowed to use emojis sparingly if they fit the topic.
-'''
+"""
 
-LLM_JUDGE_PROMPT = '''
+LLM_JUDGE_PROMPT = """
 You are an expert social media strategist.
 
 Your task is to evaluate the following tweet for its quality, clarity, and potential to perform well on Twitter/X:
@@ -86,17 +86,17 @@ Your task is to evaluate the following tweet for its quality, clarity, and poten
 
         Respond with JSON like:
         {{"score": 0.83, "status": "approved"}}
-'''
+"""
 
-THEME_REFINER_PROMPT = '''
+THEME_REFINER_PROMPT = """
 You are a social media strategist. Given the following user input, extract or rewrite it as a clear, concise, and valuable tweet theme or idea suitable for AI/tech/solopreneur audiences.
 
 User input: "{user_input}"
 
 Respond with only the improved theme.
-'''
+"""
 
-SUMMARIZE_BUSINESS_INPUT_PROMPT = '''
+SUMMARIZE_BUSINESS_INPUT_PROMPT = """
     You are a startup analyst. Analyze the following business information and extract a structured summary:
 
     - Industry / Niche
@@ -110,9 +110,9 @@ SUMMARIZE_BUSINESS_INPUT_PROMPT = '''
 
     --- Business Info ---
     {business_input}
-    '''
+    """
 
-SUMMARIZE_INSIGHTS_PROMPT = '''
+SUMMARIZE_INSIGHTS_PROMPT = """
   You are an expert business analyst. Given the following raw insights from social media discussions and answers,
   summarize them into key categories.
 
@@ -124,9 +124,9 @@ SUMMARIZE_INSIGHTS_PROMPT = '''
   --- Raw Insights ---
   {raw_insights}
   --- End Raw Insights ---
-'''
+"""
 
-TOPICS_FROM_INSIGHTS_PROMPT = '''
+TOPICS_FROM_INSIGHTS_PROMPT = """
   You are a content strategist helping a startup create social media content that resonates with its target audience.
 
 
@@ -143,7 +143,7 @@ TOPICS_FROM_INSIGHTS_PROMPT = '''
 
   Keep the tone {tone}, and write each topic as a short, punchy title or concept idea.
   Return the topics as a json list.
-'''
+"""
 
 PLATFORM_CONTENT_PROMPT = '''
     You are an expert multi-platform social media content creator.
@@ -203,7 +203,7 @@ PLATFORM_CONTENT_PROMPT = '''
 
 '''
 
-PERSONA_SCORE_PROMPT = '''
+PERSONA_SCORE_PROMPT = """
     You are evaluating social media content drafts. Four personas will provide their perspective:
     1. Social Media Strategist – values clarity, engagement, virality potential, platform tone, and brand alignment.
     2. Industry Expert – values technical accuracy, relevance, and thought leadership.
@@ -226,7 +226,7 @@ PERSONA_SCORE_PROMPT = '''
       "investor": {{"score": 0-10, "feedback": "..."}}
     }}
 
-'''
+"""
 
 REFINEMENT_PROMPT = """
   You are an expert social media copywriter skilled in adapting content for multiple platforms.

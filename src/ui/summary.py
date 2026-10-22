@@ -1,7 +1,7 @@
 import textwrap
+
 import streamlit as st
 
-from agent.social_content_graph import ContentState
 
 def summary_tab():
     st.subheader("Content Summary")

@@ -1,32 +1,36 @@
-#Load environment variables from .env file
+# ruff: noqa: N999
+# Load environment variables from .env file
 import json
 import os
-from typing import Dict, List, Optional, TypedDict
-from dotenv import load_dotenv
-from langgraph.graph import StateGraph, START, END
-from langchain_community.vectorstores import Chroma
-from langchain_openai import ChatOpenAI, OpenAIEmbeddings 
+from typing import TypedDict
+
 import langchain_google_genai
-import requests 
+import requests
+from dotenv import load_dotenv
+from langchain_community.vectorstores import Chroma
+from langchain_openai import ChatOpenAI, OpenAIEmbeddings
+from langgraph.graph import END, StateGraph
+
 from src.agent.prompts import SUMMARIZE_BUSINESS_INPUT_PROMPT, SUMMARIZE_INSIGHTS_PROMPT
-from tavily import TavilyClient
 
 load_dotenv()
 
-#State
+
+# State
 class BusinessInsightsState(TypedDict):
     business_input: str
-    summarized_business: Optional[str]
-    insight_queries: Optional[List[str]]
-    raw_insight_results: Optional[List[str]]  # list of answer strings
-    summarized_insights: Optional[Dict[str, str]]  # query -> summary
+    summarized_business: str | None
+    insight_queries: list[str] | None
+    raw_insight_results: list[str] | None  # list of answer strings
+    summarized_insights: dict[str, str] | None  # query -> summary
+
 
 initial_state: BusinessInsightsState = {
     "business_input": "",
     "summarized_business": None,
     "insight_queries": None,
     "raw_insight_results": None,
-    "summarized_insights": None
+    "summarized_insights": None,
 }
 
 # Initialize OpenAI client
@@ -34,33 +38,26 @@ ChatOpenAI.api_key = os.getenv("OPENAI_API_KEY")
 # Set Google API key for Gemini
 langchain_google_genai.GoogleGenerativeAI.api_key = os.getenv("GOOGLE_API_KEY")
 
+
 # --- LLM Selection Helper ---
 def get_llm(state: BusinessInsightsState, temperature: float = 0.8, top_p: float = 0.95):
     model_choice = state.get("model_choice", "gpt-4")
     # Map UI model names to API model names
-    model_map = {
-        "openai gpt-4.5": "gpt-4.5",
-        "gemini 1.5 pro": "gemini-1.5-pro"
-    }
+    model_map = {"openai gpt-4.5": "gpt-4.5", "gemini 1.5 pro": "gemini-1.5-pro"}
     model_name = model_map.get(model_choice.lower(), "gpt-4")
     if model_name.startswith("gpt-"):
         return ChatOpenAI(model_name=model_name, temperature=temperature, top_p=top_p)
     else:
-        return langchain_google_genai.ChatGoogleGenerativeAI(model=model_name, temperature=temperature, top_p=top_p)
+        return langchain_google_genai.ChatGoogleGenerativeAI(
+            model=model_name, temperature=temperature, top_p=top_p
+        )
 
-def search_tavily(query: str, api_key: str, site: str = None):
 
-    headers = {
-        "Authorization": f"Bearer {api_key}",
-        "Content-Type": "application/json"
-    }
+def search_tavily(query: str, api_key: str, site: str | None = None):
 
-    payload = {
-        "query": query,
-        "include_answer": True,
-        "max_results": 5,
-        "search_depth": "advanced"
-    }
+    headers = {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
+
+    payload = {"query": query, "include_answer": True, "max_results": 5, "search_depth": "advanced"}
 
     if site:
         payload["include_domains"] = [site]
@@ -71,14 +68,15 @@ def search_tavily(query: str, api_key: str, site: str = None):
     return ""
 
 
-#Graph nodes
+# Graph nodes
 
-#store business info in vector db
+
+# store business info in vector db
 def store_business_info(state: BusinessInsightsState) -> BusinessInsightsState:
     business_store = Chroma(
         collection_name="business_info",
         embedding_function=OpenAIEmbeddings(),
-        persist_directory="./chroma_db"
+        persist_directory="./chroma_db",
     )
     metadata = {
         "source": "user_input",
@@ -89,17 +87,19 @@ def store_business_info(state: BusinessInsightsState) -> BusinessInsightsState:
 
     return state  # Unchanged state
 
+
 # 1. Summarize business input
 def summarize_business(state: BusinessInsightsState) -> BusinessInsightsState:
     temperature = state.get("temperature", 0.8)
     top_p = state.get("top_p", 0.95)
     llm = get_llm(state, temperature=temperature, top_p=top_p)
-    prompt=SUMMARIZE_BUSINESS_INPUT_PROMPT.format(
-        business_input=state["business_input"][:12000] # Truncate to 12,000 characters
+    prompt = SUMMARIZE_BUSINESS_INPUT_PROMPT.format(
+        business_input=state["business_input"][:12000]  # Truncate to 12,000 characters
     )
     summary = llm.invoke(prompt)
     json_summary = json.loads(summary.content)
     return {**state, "summarized_business": json_summary}
+
 
 # 2. Generate research queries
 def generate_queries(state: BusinessInsightsState) -> BusinessInsightsState:
@@ -108,18 +108,19 @@ def generate_queries(state: BusinessInsightsState) -> BusinessInsightsState:
     product = summary.get("Product or Service Description", "the product")
     target = summary.get("Target Audience", "customers")
 
-    queries= [
+    queries = [
         f"What are common pain points for {target} in the {industry} industry?",
         f"What market trends are currently shaping the {industry} sector?",
         f"What competing solutions exist for {product}?",
         f"What kind of content engages {target} in the {industry} space?",
         f"What feedback or issues do users have with similar products to {product}?",
         f"What are misconceptions or hesitations {target} might have regarding {product}?",
-        f"What unique angles could be used to position {product} in the market?"
+        f"What unique angles could be used to position {product} in the market?",
     ]
     return {**state, "insight_queries": queries}
 
- # 3. Run Tavily search per query/platform
+
+# 3. Run Tavily search per query/platform
 def get_social_insights(state: BusinessInsightsState) -> BusinessInsightsState:
     research_queries = state["insight_queries"]
     platforms = ["reddit.com", "quora.com", "twitter.com", "news.ycombinator.com"]
@@ -133,29 +134,29 @@ def get_social_insights(state: BusinessInsightsState) -> BusinessInsightsState:
                 all_answers.append(f"From {platform} on '{question}':\n{result}\n")
     return {**state, "raw_insight_results": all_answers}
 
+
 # 4. Summarize insights with LLM
 def summarize_insights(state: BusinessInsightsState) -> BusinessInsightsState:
     temperature = 0.3
     top_p = state.get("top_p", 0.95)
     llm = get_llm(state, temperature=temperature, top_p=top_p)
     raw_insights = "\n".join(state["raw_insight_results"])[:12000]  # Truncate to 12,000 characters
-    prompt=SUMMARIZE_INSIGHTS_PROMPT.format(
-        raw_insights=raw_insights 
-    )
+    prompt = SUMMARIZE_INSIGHTS_PROMPT.format(raw_insights=raw_insights)
     summary = llm.invoke(prompt)
 
     try:
         summary_dict = json.loads(summary.content)
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001 - provider responses are untrusted
         summary_dict = {"error": f"Could not parse summary: {e}\nRaw output: {summary.content}"}
     return {**state, "summarized_insights": summary_dict}
 
-#store summarized insights in vector db
+
+# store summarized insights in vector db
 def store_summarized_insights(state: BusinessInsightsState) -> BusinessInsightsState:
     insights_store = Chroma(
         collection_name="business_insights",
         embedding_function=OpenAIEmbeddings(),
-        persist_directory="./chroma_db"
+        persist_directory="./chroma_db",
     )
     for category, insight in state.get("summarized_insights", {}).items():
         # Flatten lists to a single string
@@ -164,16 +165,13 @@ def store_summarized_insights(state: BusinessInsightsState) -> BusinessInsightsS
             # Flatten dicts to a single string
         elif isinstance(insight, dict):
             insight = " ".join(f"{k}: {v}" for k, v in insight.items())
-        metadata = {
-            "category": category,
-            "type": "insight",
-            "source": "auto_summary"
-        }
+        metadata = {"category": category, "type": "insight", "source": "auto_summary"}
         insights_store.add_texts([insight], metadatas=[metadata])
 
     return state  # Unchanged state
 
-#Building the graph
+
+# Building the graph
 workflow = StateGraph(BusinessInsightsState)
 workflow.add_node("SummarizeBusiness", summarize_business)
 workflow.add_node("StoreBusinessInfo", store_business_info)

@@ -1,24 +1,21 @@
-import streamlit as st
 import os
-from typing import Optional
-from tavily import TavilyClient
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_core.documents import Document
+
+import pypdf
+import streamlit as st
 from langchain_community.vectorstores import Chroma
 from langchain_openai import OpenAIEmbeddings
-from langchain.chat_models import ChatOpenAI
-from langchain.prompts import ChatPromptTemplate
-import requests
-import pypdf
+from tavily import TavilyClient
+
 from src.agent.businessinsightsGraph import insight_graph as businessInsightsGraph
 
 business_store = Chroma(
-        collection_name="business_info",
-        embedding_function=OpenAIEmbeddings(),
-        persist_directory="./chroma_db"
-    )
+    collection_name="business_info",
+    embedding_function=OpenAIEmbeddings(),
+    persist_directory="./chroma_db",
+)
 
-def extract_website_content(url: str) -> Optional[str]:
+
+def extract_website_content(url: str) -> str | None:
     api_key = os.getenv("TAVILY_API_KEY")
     if not api_key:
         st.error("Tavily API key not found in environment.")
@@ -32,9 +29,10 @@ def extract_website_content(url: str) -> Optional[str]:
         else:
             st.warning("No content extracted from the website.")
             return None
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001 - provider failures are shown in the UI
         st.error(f"Failed to extract website content: {e}")
         return None
+
 
 # def chunk_and_store_business_info(text: str, source: str, metatags: dict):
 #     splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
@@ -83,7 +81,7 @@ def extract_website_content(url: str) -> Optional[str]:
 # def gather_all_insights(business_description: str, api_key: str):
 #     research_questions = generate_research_questions(business_description)
 #     platforms = ["reddit.com", "quora.com", "twitter.com", "news.ycombinator.com"]
-    
+
 #     all_answers = []
 
 #     for question in research_questions:
@@ -91,9 +89,8 @@ def extract_website_content(url: str) -> Optional[str]:
 #             result = search_tavily(question, api_key, site=platform)
 #             if result:
 #                 all_answers.append(f"From {platform} on '{question}':\n{result}\n")
-    
-#     return all_answers
 
+#     return all_answers
 
 
 # def summarize_insights(all_answers: list, openai_api_key: str):
@@ -142,16 +139,17 @@ def extract_website_content(url: str) -> Optional[str]:
 #         return json.loads(result.content)
 #     except json.JSONDecodeError:
 #         return {"error": "Could not parse summary"}
-    
+
 
 def market_insights_tab(personality, model_choice, temperature, top_p):
     st.markdown("Upload your business info to generate data-driven insights for better content.")
 
     website_url = st.text_input("Website or About Page URL")
-    uploaded_file = st.file_uploader("Upload a Pitch Deck or Business Description (PDF or TXT)", type=["pdf", "txt"])
+    uploaded_file = st.file_uploader(
+        "Upload a Pitch Deck or Business Description (PDF or TXT)", type=["pdf", "txt"]
+    )
 
     business_input = ""
-    source = None
     metatags = {}
 
     if uploaded_file:
@@ -162,7 +160,6 @@ def market_insights_tab(personality, model_choice, temperature, top_p):
         else:
             # Assume plain text
             business_input = uploaded_file.read().decode("utf-8", errors="ignore")
-        source = "file"
         metatags["filename"] = uploaded_file.name
     if website_url:
         with st.spinner("Extracting content from website via Tavily..."):
@@ -170,22 +167,22 @@ def market_insights_tab(personality, model_choice, temperature, top_p):
         if website_content:
             if business_input:
                 business_input += "\n\n" + website_content
-                source = "file+website"
             else:
                 business_input = website_content
-                source = "website"
             metatags["website_url"] = website_url
 
     if business_input:
         if st.button("Uplod Business Info", key="embed_business_info"):
             with st.spinner("Gathering and analyzing insights from social platforms.."):
-                result = businessInsightsGraph.invoke({
-                "business_input": business_input,
-                "personality": personality.lower() if personality else "smart-casual",
-                "model_choice": model_choice,
-                "temperature": temperature,
-                "top_p": top_p
-            })
+                result = businessInsightsGraph.invoke(
+                    {
+                        "business_input": business_input,
+                        "personality": personality.lower() if personality else "smart-casual",
+                        "model_choice": model_choice,
+                        "temperature": temperature,
+                        "top_p": top_p,
+                    }
+                )
             summarized_insights = result.get("summarized_insights", "No insights found.")
             if summarized_insights:
                 st.divider()
@@ -225,7 +222,5 @@ def market_insights_tab(personality, model_choice, temperature, top_p):
             # if insights_summary:
             #     st.markdown(insights_summary)
     else:
-        st.info("Please enter a website URL or upload a business file to begin.") 
-        #st.stop()
-
-    
+        st.info("Please enter a website URL or upload a business file to begin.")
+        # st.stop()

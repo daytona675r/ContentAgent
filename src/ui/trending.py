@@ -1,4 +1,3 @@
-import json
 import streamlit as st
 
 from tools.insights import get_market_insight_topics
@@ -11,7 +10,7 @@ def market_insights_topics_section(model, personality, temperature, top_p):
         st.session_state["selected_market_topic"] = None
         st.session_state["input"] = ""
         st.session_state["reset_market_topic"] = False
-        
+
     # Load topics only once
     if "market_insight_topics" not in st.session_state:
         with st.spinner("Creating topics from business insights..."):
@@ -27,12 +26,13 @@ def market_insights_topics_section(model, personality, temperature, top_p):
 
     with col2:
         # Show button only if topics are already loaded
-        if "market_insight_topics" in st.session_state:
-            if st.button("🔁", key="retryInsightTopics", help="Recreate topics from insights"):
-                with st.spinner("Recreating..."):
-                    st.session_state.market_insight_topics = get_market_insight_topics(
-                        model, personality, temperature, top_p
-                    )
+        if "market_insight_topics" in st.session_state and st.button(
+            "🔁", key="retryInsightTopics", help="Recreate topics from insights"
+        ):
+            with st.spinner("Recreating..."):
+                st.session_state.market_insight_topics = get_market_insight_topics(
+                    model, personality, temperature, top_p
+                )
 
     # Use a persistent key for the radio box
     selected_topic = st.radio(
@@ -41,7 +41,6 @@ def market_insights_topics_section(model, personality, temperature, top_p):
         index=None,
         key="selected_market_topic",
     )
-
 
     # If a topic is selected, set it as the chat input value
     send_topic = st.button(
@@ -70,6 +69,7 @@ def market_insights_topics_section(model, personality, temperature, top_p):
         st.rerun()
     return selected_topic
 
+
 # --- Old Trending Section (now disconnected from use) ---
 def trending_section(
     fetch_trending,
@@ -82,7 +82,9 @@ def trending_section(
 ):
     st.markdown("#### 🔥 Trending Topics (DISCONNECTED)")
     trending_titles = fetch_trending()
-    selected = st.radio("Use a trending topic?", trending_titles, index=None, key="trending_radio", disabled=True)
+    selected = st.radio(
+        "Use a trending topic?", trending_titles, index=None, key="trending_radio", disabled=True
+    )
     st.button(
         "➡️",
         key="send_trending",

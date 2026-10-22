@@ -1,10 +1,11 @@
 import streamlit as st
-from agent.social_content_graph import social_content_graph
-from agent.social_content_graph import ContentState
+
+from agent.social_content_graph import ContentState, social_content_graph
 from tools.business_info import get_business_info
 from tools.insights import get_market_insights
 
-def run_content_generation(topic:str):
+
+def run_content_generation(topic: str):
     # Initialize state with topic + insights
     insights = " ".join(get_market_insights())
     business_info = " ".join(get_business_info())
@@ -12,8 +13,8 @@ def run_content_generation(topic:str):
         topic=topic,
         summarized_insights=insights,
         business_info=business_info,
-        final_content={}, 
-        current_node=None
+        final_content={},
+        current_node=None,
     )
 
     with st.status("Generating content...", expanded=True) as status:

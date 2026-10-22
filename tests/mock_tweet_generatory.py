@@ -3,9 +3,16 @@ import random
 from datetime import UTC, datetime, timedelta
 
 # Mock themes and styles
-themes = ["Startup Building", "Solopreneur Tactics", "AI Productivity", "Prompt Engineering", "No-Code AI"]
+themes = [
+    "Startup Building",
+    "Solopreneur Tactics",
+    "AI Productivity",
+    "Prompt Engineering",
+    "No-Code AI",
+]
 tones = ["casual", "professional", "insightful", "motivational"]
 styles = ["listicle", "thread", "one-liner", "case study"]
+
 
 # Tweet text generator (basic placeholders)
 def generate_tweet_text(theme):
@@ -14,9 +21,10 @@ def generate_tweet_text(theme):
         "3 lessons I learned from building an AI-first tool",
         "The solopreneur's roadmap for launching with AI",
         f"A quick breakdown of {theme.lower()} success",
-        f"AI isn’t enough: {theme.lower()} needs this too"
+        f"AI isn’t enough: {theme.lower()} needs this too",
     ]
     return random.choice(starters)
+
 
 # Generate one mock tweet object
 def generate_mock_tweet(i, date_offset):
@@ -39,12 +47,13 @@ def generate_mock_tweet(i, date_offset):
             "likes": likes,
             "retweets": retweets,
             "replies": replies,
-            "impressions": impressions
+            "impressions": impressions,
         },
         "tone": random.choice(tones),
         "style": random.choice(styles),
-        "time_posted": time_posted
+        "time_posted": time_posted,
     }
+
 
 # Generate 100 mock tweets over the last 5 months
 mock_data = [generate_mock_tweet(i, random.randint(0, 150)) for i in range(1, 101)]

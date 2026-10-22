@@ -1,5 +1,6 @@
 import streamlit as st
 
+
 def instagram_tab():
     st.header("Instagram Content")
     final_state = getattr(st.session_state, "final_state", None)
@@ -22,7 +23,7 @@ def instagram_tab():
             content = final_state["final_content"].get("instagram", {})
         else:
             content = {}
-        
+
         post = content.get("post", "No Instagram content available.")
         hastags = content.get("hashtags", "No Instagram hastags available.")
         st.markdown(post)

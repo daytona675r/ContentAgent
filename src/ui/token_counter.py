@@ -1,5 +1,6 @@
 import streamlit as st
 
+
 def floating_token_box(final_state):
     if final_state:
         # Try to get token_count and price_usd safely
@@ -37,13 +38,13 @@ def floating_token_box(final_state):
                 .floating-token-box div { margin-bottom: 0.5em; }
                 </style>
                 """,
-                unsafe_allow_html=True
+                unsafe_allow_html=True,
             )
             st.markdown(
                 f'<div class="floating-token-box">'
-                f'<b>Usage & Cost</b><br>'
-                f'Tokens used: <b>{token_count}</b><br>'
-                f'Est. price: <b>${price_usd:.4f}</b>'
-                f'</div>',
-                unsafe_allow_html=True
+                f"<b>Usage & Cost</b><br>"
+                f"Tokens used: <b>{token_count}</b><br>"
+                f"Est. price: <b>${price_usd:.4f}</b>"
+                f"</div>",
+                unsafe_allow_html=True,
             )
