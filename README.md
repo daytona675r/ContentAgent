@@ -120,6 +120,28 @@ Demo mode labels sample context, platform drafts and persona scores as
 replayed data. It makes no OpenAI, Google or Tavily request. Real mode remains
 local/private and reads provider credentials from environment variables.
 
+## Full-stack PULSE surface
+
+The same deterministic workflow is available through a typed FastAPI boundary
+and a small React/Vite frontend:
+
+```text
+React/Vite frontend (localhost:5173) -> FastAPI demo API (localhost:8000)
+                                        -> replayed PULSE workflow data
+```
+
+Run locally from a fresh checkout:
+
+```bash
+uvicorn api.main:app --reload --port 8000
+cd frontend && npm install && npm run dev
+```
+
+Set `VITE_API_BASE_URL` at frontend build time when the API is hosted elsewhere.
+The public demo uses replayed data only; provider credentials remain server-side
+and are never sent to browser code. The Streamlit surface remains available as
+the legacy local UI.
+
 **Environment variables (set in `.env`):**
 ```
 OPENAI_API_KEY=your-key

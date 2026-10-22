@@ -17,9 +17,22 @@ jobs:
         with:
           python-version: '3.11'
       - run: pip install -e . pytest ruff
-      - run: ruff check src/agent/contracts.py tests/test_contracts.py tests/test_demo_mode.py tests/test_graph_flow.py
-      - run: ruff format --check src/agent/contracts.py tests/test_contracts.py tests/test_demo_mode.py tests/test_graph_flow.py
+      - run: ruff check api src/agent/contracts.py tests/test_contracts.py tests/test_demo_mode.py tests/test_graph_flow.py tests/test_api.py
+      - run: ruff format --check api src/agent/contracts.py tests/test_contracts.py tests/test_demo_mode.py tests/test_graph_flow.py tests/test_api.py
       - run: python -m pytest -q
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci
+        working-directory: frontend
+      - run: npm run lint
+        working-directory: frontend
+      - run: npm test
+        working-directory: frontend
+      - run: npm run build
+        working-directory: frontend
       - run: python -c "from agent.social_content_graph import social_content_graph; print(type(social_content_graph).__name__)"
       - run: DEMO_MODE=1 python -c "import demo_mode; assert demo_mode.DEMO_OUTPUTS"
       - run: python -m py_compile app.py demo_mode.py

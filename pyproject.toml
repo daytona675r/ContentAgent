@@ -22,6 +22,8 @@ dependencies = [
   "langchain-google-genai",
   "tavily-python",
   "pypdf",
+  "fastapi",
+  "uvicorn[standard]",
 ]
 
 [tool.setuptools.packages.find]
