@@ -147,18 +147,40 @@ public API service, set it to that HTTPS URL and rebuild the frontend. Set
 `PULSE_ALLOWED_ORIGINS` to the exact deployed frontend origin plus
 `http://localhost:5173`; it is intentionally not a wildcard.
 
-### Render deployment
+### Live portfolio demo (Render)
 
-[`render.yaml`](render.yaml) defines a free Frankfurt Blueprint with a FastAPI
-demo service and a React static site. The services run deterministic replay
-data only and require no provider credentials. Render may suspend free-tier
-services after inactivity. After connecting the Blueprint, verify both public
-URLs with `API_URL=... FRONTEND_URL=... scripts/deployment_smoke.sh`. Set the
-frontend `VITE_API_BASE_URL` to the public `https://<api-service>.onrender.com`
-URL and set backend `PULSE_ALLOWED_ORIGINS` to the exact public static-site
-origin (plus `http://localhost:5173` for local work). These are owner-supplied
-Render values; the Blueprint does not pass a private service host to browser
-code.
+- **[Open the PULSE React demo](https://pulse-demo-web.onrender.com)**
+- [FastAPI health endpoint](https://pulse-demo-api-iwj4.onrender.com/health)
+- [Hosted end-to-end smoke check](https://github.com/daytona675r/ContentAgent/actions/workflows/hosted-smoke.yml)
+
+The hosted React app talks to a public FastAPI service and executes **the real
+LangGraph orchestration** using the deterministic `ReplayProvider`. Generation,
+evaluation, refinement and finalization run without external OpenAI, Google,
+Tavily or other paid-model calls. Example output and demo token/cost figures
+are simulated; this is not a live-LLM demonstration. The Streamlit UI remains
+the legacy/local surface. No provider secrets are required on Render.
+
+[`render.yaml`](render.yaml) documents the two Render services. They were
+provisioned individually in Frankfurt/the Render static CDN using the same
+service settings, and auto-deploy from `main`. The deployed configuration is:
+
+- Frontend build-time `VITE_API_BASE_URL=https://pulse-demo-api-iwj4.onrender.com`
+- Backend `PULSE_ALLOWED_ORIGINS=https://pulse-demo-web.onrender.com,http://localhost:5173`
+- Backend `DEMO_MODE=true`, `PYTHON_VERSION=3.11.11`, `pip install -e .`
+
+To independently verify the hosted flow, run:
+
+```bash
+API_URL=https://pulse-demo-api-iwj4.onrender.com \
+FRONTEND_URL=https://pulse-demo-web.onrender.com \
+bash scripts/deployment_smoke.sh
+```
+
+Alternatively, manually run `PULSE Hosted Smoke` in GitHub Actions; it
+additionally checks deployed CORS response headers and the frontend bundle's
+API endpoint. Render Free services can spin down after inactivity, so the
+first request after an idle period may take longer. The public demo is a
+portfolio showcase, not an SLA-backed production service.
 
 **Environment variables (set in `.env`):**
 ```
