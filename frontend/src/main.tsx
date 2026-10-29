@@ -51,7 +51,7 @@ function Workflow({ result }: { result: DemoRun }) {
   return <>
     <section className="context panel"><h2>Business context</h2><p>{result.scenario.context}</p></section>
     <section className="panel"><h2>Initial platform drafts</h2><div className="grid">{Object.entries(result.initial_drafts).map(([platform, text]) => <article key={platform}><h3>{platform}</h3><p>{text}</p></article>)}</div></section>
-    <section className="panel"><h2>Persona evaluation</h2><div className="grid">{Object.entries(result.persona_scores).map(([persona, score]) => <article key={persona}><h3>{persona}</h3><strong>{score.toFixed(1)} / 10</strong></article>)}</div><p>{result.persona_feedback}</p></section>
+    <section className="panel"><h2>Platform evaluation scores</h2><div className="grid">{Object.entries(result.persona_scores).map(([platform, score]) => <article key={platform}><h3>{platform}</h3><strong>{score.toFixed(1)} / 10</strong></article>)}</div><p>{result.persona_feedback}</p></section>
     <section className="panel"><h2>Refinement history</h2>{result.refinement_history.map((step) => <div className="step" key={step.stage}><span>{step.stage}</span><p>{step.content}</p></div>)}</section>
     <section className="panel accepted"><h2>Final accepted content</h2>{Object.entries(result.final_accepted).map(([platform, text]) => <article key={platform}><h3>{platform}</h3><p>{text}</p></article>)}<small>{result.token_cost.tokens} simulated tokens · ${result.token_cost.estimated_usd.toFixed(2)} example cost</small></section>
   </>;

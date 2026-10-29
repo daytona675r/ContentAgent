@@ -126,8 +126,7 @@ The same deterministic workflow is available through a typed FastAPI boundary
 and a small React/Vite frontend:
 
 ```text
-React/Vite frontend (localhost:5173) -> FastAPI demo API (localhost:8000)
-                                        -> replayed PULSE workflow data
+React/Vite frontend -> FastAPI -> real LangGraph -> deterministic ReplayProvider
 ```
 
 Run locally from a fresh checkout:
@@ -138,9 +137,15 @@ cd frontend && npm install && npm run dev
 ```
 
 Set `VITE_API_BASE_URL` at frontend build time when the API is hosted elsewhere.
-The public demo uses replayed data only; provider credentials remain server-side
-and are never sent to browser code. The Streamlit surface remains available as
-the legacy local UI.
+The public demo executes the real LangGraph with deterministic simulated
+provider adapters; it does not call OpenAI, Google or Tavily and no provider
+credentials reach the browser. The Streamlit surface remains available as the
+legacy/local UI.
+
+`VITE_API_BASE_URL` is a Vite build-time variable. After Render creates the
+public API service, set it to that HTTPS URL and rebuild the frontend. Set
+`PULSE_ALLOWED_ORIGINS` to the exact deployed frontend origin plus
+`http://localhost:5173`; it is intentionally not a wildcard.
 
 ### Render deployment
 
@@ -200,7 +205,7 @@ streamlit run app.py
 ## Badges & Tech
 
 - **LLM Orchestration:** LangGraph
-- **Frontend:** Streamlit
+- **Frontend:** React/Vite (public demo); Streamlit (legacy/local surface)
 - **Storage:** Vector DB (Chroma)
 - **Evaluation:** LLM-as-a-Judge with multi-persona perspectives
 - **LLMs:** OpenAI GPT models (gpt-4 for generation/scoring, gpt-3.5 optional for cheaper tasks, Gemini)

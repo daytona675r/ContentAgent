@@ -13,9 +13,9 @@ services:
       - key: PULSE_ALLOWED_ORIGINS
         sync: false
 
-  - type: static_site
+  - type: web
     name: pulse-demo-web
-    region: frankfurt
+    runtime: static
     buildCommand: npm ci && npm run build
     rootDir: frontend
     staticPublishPath: dist

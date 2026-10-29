@@ -18,8 +18,8 @@ jobs:
         with:
           python-version: '3.11'
       - run: pip install -e . pytest ruff
-      - run: ruff check api src/agent/contracts.py tests/test_contracts.py tests/test_demo_mode.py tests/test_graph_flow.py tests/test_api.py
-      - run: ruff format --check api src/agent/contracts.py tests/test_contracts.py tests/test_demo_mode.py tests/test_graph_flow.py tests/test_api.py
+      - run: ruff check api src/agent tests
+      - run: ruff format --check api src/agent tests
       - run: python -m pytest -q
       - uses: actions/setup-node@v4
         with:
