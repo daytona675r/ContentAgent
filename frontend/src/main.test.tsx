@@ -1,6 +1,6 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
-import { Workflow } from "./main";
+import { Workflow, defaultScenarioId } from "./main";
 
 const result = {
   demo: true,
@@ -14,6 +14,16 @@ const result = {
   final_accepted: { twitter: "Refined draft" },
   token_cost: { tokens: 0, estimated_usd: 0 },
 };
+
+describe("scenario initialization", () => {
+  it("selects the first actual API scenario instead of a removed placeholder ID", () => {
+    expect(defaultScenarioId([
+      { id: "onboarding-saas", label: "Onboarding", context: "Fictional SaaS" },
+      { id: "repairable-commuter", label: "Commuter", context: "Fictional light" },
+    ])).toBe("onboarding-saas");
+    expect(defaultScenarioId([])).toBe("");
+  });
+});
 
 describe("workflow presentation", () => {
   it("keeps platform progression and replay labels visible", () => {
