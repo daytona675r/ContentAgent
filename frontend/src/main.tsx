@@ -3,15 +3,22 @@ import { createRoot } from "react-dom/client";
 import { api, DemoRun, Scenario } from "./api";
 import "./style.css";
 
-export function App() {
+export export function defaultScenarioId(items: Scenario[]): string {
+  return items[0]?.id ?? "";
+}
+
+function App() {
   const [scenarios, setScenarios] = useState<Scenario[]>([]);
-  const [selected, setSelected] = useState("customer-context");
+  const [selected, setSelected] = useState("");
   const [result, setResult] = useState<DemoRun>();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string>();
 
   useEffect(() => {
-    api.scenarios().then(setScenarios).catch((reason: Error) => setError(reason.message));
+    api.scenarios().then((items) => {
+      setScenarios(items);
+      setSelected(defaultScenarioId(items));
+    }).catch((reason: Error) => setError(reason.message));
   }, []);
 
   async function runDemo() {
@@ -39,7 +46,7 @@ export function App() {
         <select id="scenario" value={selected} onChange={(event) => setSelected(event.target.value)}>
           {scenarios.map((scenario) => <option key={scenario.id} value={scenario.id}>{scenario.label}</option>)}
         </select>
-        <button onClick={runDemo} disabled={loading}>{loading ? "Running…" : "Run workflow"}</button>
+        <button onClick={runDemo} disabled={loading || !selected}>{loading ? "Running…" : "Run workflow"}</button>
       </section>
       {error && <p className="error">{error}</p>}
       {result && <Workflow result={result} />}
