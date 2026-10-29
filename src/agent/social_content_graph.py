@@ -253,7 +253,7 @@ def refine_content_node(state: ContentState):
 
             # Update state
             state.generated_content[platform] = json_content
-            state.refinement_history[platform].append(json_content)
+            state.refinement_history[platform].append(json_content["post"])
             state.refinement_loops[platform] += 1
 
     return state
