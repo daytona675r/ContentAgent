@@ -1,0 +1,50 @@
+name: PULSE Hosted Smoke
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/hosted-smoke.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  hosted-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      API_URL: https://pulse-demo-api-iwj4.onrender.com
+      FRONTEND_URL: https://pulse-demo-web.onrender.com
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Wake Render free-tier API and verify health
+        run: |
+          for attempt in $(seq 1 12); do
+            if curl --fail --silent --show-error --max-time 25 "$API_URL/health"; then
+              exit 0
+            fi
+            sleep 10
+          done
+          exit 1
+
+      - name: Run representative hosted LangGraph demo and frontend smoke
+        run: bash scripts/deployment_smoke.sh
+
+      - name: Verify browser origin is explicitly permitted by CORS
+        run: |
+          curl --fail --silent --show-error --dump-header /tmp/pulse-cors-headers \
+            --output /dev/null \
+            -H "Origin: $FRONTEND_URL" \
+            "$API_URL/api/demo/scenarios"
+          grep -iFq "access-control-allow-origin: $FRONTEND_URL" /tmp/pulse-cors-headers
+
+      - name: Verify deployed React bundle points to the public FastAPI URL
+        run: |
+          curl --fail --silent --show-error "$FRONTEND_URL/" > /tmp/pulse-index.html
+          asset_path="$(grep -oE '/assets/[^"]+\.js' /tmp/pulse-index.html | head -n1)"
+          test -n "$asset_path"
+          curl --fail --silent --show-error "$FRONTEND_URL$asset_path" > /tmp/pulse-bundle.js
+          grep -Fq "$API_URL" /tmp/pulse-bundle.js
