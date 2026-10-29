@@ -4,17 +4,13 @@ from __future__ import annotations
 
 import os
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
-from demo_mode import (
-    DEMO_CONTEXT,
-    DEMO_NOTICE,
-    DEMO_OUTPUTS,
-    DEMO_REFINEMENT,
-    DEMO_SCORES,
-)
+from agent.demo_provider import ReplayProvider
+from agent.social_content_graph import ContentState, social_content_graph
+from demo_mode import DEMO_CONTEXT, DEMO_NOTICE
 
 
 class Scenario(BaseModel):
@@ -75,16 +71,46 @@ def scenarios() -> list[Scenario]:
 @app.post("/api/demo/run", response_model=DemoRunResponse)
 def run_demo(request: DemoRunRequest) -> DemoRunResponse:
     scenario = next((item for item in SCENARIOS if item.id == request.scenario_id), SCENARIOS[0])
+    state = ContentState(topic=scenario.context, provider=ReplayProvider())
+    try:
+        result = social_content_graph.invoke(state)
+    except Exception as exc:
+        raise HTTPException(
+            status_code=502, detail=f"deterministic workflow failed: {exc}"
+        ) from exc
+    histories = result["refinement_history"]
+    if not histories or not result.get("final_content"):
+        raise HTTPException(
+            status_code=502, detail="deterministic workflow produced no final content"
+        )
+    initial = {platform: entries[0] for platform, entries in histories.items() if entries}
+    final = {
+        platform: content["post"] if isinstance(content, dict) else content
+        for platform, content in result["final_content"].items()
+    }
+    history = [
+        {"stage": "initial", "content": "\n".join(initial.values())},
+        {"stage": "refined", "content": "\n".join(final.values())},
+    ]
+    scores = {
+        platform: sum(item["score"] for item in feedback.values()) / len(feedback)
+        for platform, feedback in result["persona_scores"].items()
+    }
+    feedback = "; ".join(
+        item["feedback"]
+        for persona_scores in result["persona_scores"].values()
+        for item in persona_scores.values()
+    )
     return DemoRunResponse(
         notice=DEMO_NOTICE,
         scenario=scenario,
-        initial_drafts=DEMO_OUTPUTS,
-        persona_scores=DEMO_SCORES,
-        persona_feedback=DEMO_REFINEMENT["feedback"],
-        refinement_history=[
-            {"stage": "initial", "content": DEMO_REFINEMENT["initial"]},
-            {"stage": "refined", "content": DEMO_REFINEMENT["accepted"]},
-        ],
-        final_accepted=DEMO_OUTPUTS,
-        token_cost={"tokens": 842, "estimated_usd": 0.0},
+        initial_drafts=initial,
+        persona_scores=scores,
+        persona_feedback=feedback,
+        refinement_history=history,
+        final_accepted=final,
+        token_cost={
+            "tokens": result.get("token_count", 0),
+            "estimated_usd": result.get("price_usd", 0.0),
+        },
     )

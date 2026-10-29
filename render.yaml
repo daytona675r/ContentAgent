@@ -11,10 +11,7 @@ services:
       - key: DEMO_MODE
         value: "true"
       - key: PULSE_ALLOWED_ORIGINS
-        fromService:
-          type: static_site
-          name: pulse-demo-web
-          property: url
+        sync: false
 
   - type: static_site
     name: pulse-demo-web
@@ -24,7 +21,4 @@ services:
     staticPublishPath: dist
     envVars:
       - key: VITE_API_BASE_URL
-        fromService:
-          type: web
-          name: pulse-demo-api
-          property: host
+        sync: false

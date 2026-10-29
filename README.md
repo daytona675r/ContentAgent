@@ -148,8 +148,12 @@ the legacy local UI.
 demo service and a React static site. The services run deterministic replay
 data only and require no provider credentials. Render may suspend free-tier
 services after inactivity. After connecting the Blueprint, verify both public
-URLs with `API_URL=... FRONTEND_URL=... scripts/deployment_smoke.sh`; the
-repository does not publish a URL until the owner creates the Render services.
+URLs with `API_URL=... FRONTEND_URL=... scripts/deployment_smoke.sh`. Set the
+frontend `VITE_API_BASE_URL` to the public `https://<api-service>.onrender.com`
+URL and set backend `PULSE_ALLOWED_ORIGINS` to the exact public static-site
+origin (plus `http://localhost:5173` for local work). These are owner-supplied
+Render values; the Blueprint does not pass a private service host to browser
+code.
 
 **Environment variables (set in `.env`):**
 ```

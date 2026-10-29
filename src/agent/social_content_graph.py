@@ -56,6 +56,7 @@ class ContentState:
 
     # Final chosen content
     final_content: dict[str, str] = field(default_factory=dict)
+    provider: Any = None
 
     def to_dict(self):
         """Convert state to dict for storage/UI rendering."""
@@ -99,6 +100,8 @@ def get_llm(state: ContentState, temperature: float = 0.8, top_p: float = 0.95):
 
 
 def get_content_drafts(state: ContentState):
+    if state.provider is not None:
+        return state.provider.generate(state.topic)
     llm = get_llm(state, temperature=state.temperature, top_p=state.top_p)
 
     prompt = PLATFORM_CONTENT_PROMPT.format(
@@ -111,6 +114,8 @@ def get_content_drafts(state: ContentState):
 
 
 def judge_content(state: ContentState, platform: str, content: str):
+    if state.provider is not None:
+        return state.provider.judge(platform, content)
     # llm = get_llm(state, temperature=state.temperature, top_p=state.top_p)
     llm = ChatOpenAI(model_name="gpt-4", temperature=state.temperature, top_p=state.top_p)
     prompt = PERSONA_SCORE_PROMPT.format(content=content, platform=platform)
@@ -120,6 +125,10 @@ def judge_content(state: ContentState, platform: str, content: str):
 
 
 def refine_content(state: ContentState, platform: str, combined_feedback: str):
+    if state.provider is not None:
+        return state.provider.refine(
+            platform, state.generated_content.get(platform, ""), combined_feedback
+        )
     llm = get_llm(state, temperature=state.temperature, top_p=state.top_p)
 
     prompt = REFINEMENT_PROMPT.format(
