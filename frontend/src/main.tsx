@@ -3,11 +3,11 @@ import { createRoot } from "react-dom/client";
 import { api, DemoRun, Scenario } from "./api";
 import "./style.css";
 
-export export function defaultScenarioId(items: Scenario[]): string {
+export function defaultScenarioId(items: Scenario[]): string {
   return items[0]?.id ?? "";
 }
 
-function App() {
+export function App() {
   const [scenarios, setScenarios] = useState<Scenario[]>([]);
   const [selected, setSelected] = useState("");
   const [result, setResult] = useState<DemoRun>();
