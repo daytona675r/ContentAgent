@@ -1,11 +1,15 @@
+import json
+
 from agent.demo_provider import FIXTURES, PLATFORMS, ReplayProvider
 
 
 def test_fixture_copy_is_complete_and_platform_specific() -> None:
     for fixture in FIXTURES.values():
         provider = ReplayProvider(fixture)
-        generated = provider.generate(fixture.context).content
-        assert all(fixture.drafts[platform] in generated for platform in PLATFORMS)
+        generated = json.loads(provider.generate(fixture.context).content)
+        assert all(
+            generated[platform]["post"] == fixture.drafts[platform] for platform in PLATFORMS
+        )
         assert len({fixture.drafts[platform] for platform in PLATFORMS}) == 4
         assert all(fixture.refined[platform] != fixture.drafts[platform] for platform in PLATFORMS)
         assert all("context-first draft" not in fixture.drafts[platform] for platform in PLATFORMS)
