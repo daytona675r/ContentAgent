@@ -120,6 +120,12 @@ Demo mode labels sample context, platform drafts and persona scores as
 replayed data. It makes no OpenAI, Google or Tavily request. Real mode remains
 local/private and reads provider credentials from environment variables.
 
+The public replay demo offers three explicitly fictional briefs: a B2B onboarding
+workspace for operations teams, a repairable commuter light, and a neighborhood
+evening market. Each brief has authored platform-specific drafts, strategist
+feedback and improved revisions. The real LangGraph runs end to end; provider
+responses are deterministic sample data rather than live AI generation.
+
 ## Full-stack PULSE surface
 
 The same deterministic workflow is available through a typed FastAPI boundary

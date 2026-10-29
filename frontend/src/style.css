@@ -13,7 +13,15 @@ button { color: white; background: #2f6c9f; border-color: #2f6c9f; cursor: point
 h2 { margin-top: 0; font-size: 1.1rem; } h3 { margin: 0 0 .4rem; font-size: .95rem; }
 .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: .8rem; }
 article { background: #f7f9fb; padding: .9rem; border-radius: 10px; } article p { margin: 0; color: #40505e; line-height: 1.5; }
+.muted { color: #596775; }
+.platforms { display: grid; gap: 1rem; }
+.platform { background: #f7f9fb; padding: 1rem; border-radius: 10px; }
+.progression { display: grid; grid-template-columns: repeat(4, 1fr); gap: .7rem; }
+.progression > div { background: white; border: 1px solid #e1e8ee; padding: .7rem; border-radius: 8px; }
+.progression span { color: #4779a8; text-transform: uppercase; font-size: .68rem; letter-spacing: .08em; font-weight: 700; }
+.progression strong { display: block; margin-top: .5rem; color: #315d84; }
 .step { border-left: 3px solid #4f8ab7; padding: .2rem 0 .2rem 1rem; margin: .8rem 0; } .step span { color: #4779a8; text-transform: uppercase; font-size: .72rem; letter-spacing: .1em; }
 .accepted { border-color: #9ac9ad; } .accepted small { color: #607269; display: block; margin-top: 1rem; }
 .error { background: #fff0f0; color: #a33434; padding: .8rem; border-radius: 8px; }
-@media (max-width: 620px) { .controls { align-items: stretch; flex-direction: column; } }
+@media (max-width: 760px) { .progression { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 620px) { .controls { align-items: stretch; flex-direction: column; } .progression { grid-template-columns: 1fr; } }

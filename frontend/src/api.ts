@@ -6,7 +6,8 @@ export type DemoRun = {
   initial_drafts: Record<string, string>;
   persona_scores: Record<string, number>;
   persona_feedback: string;
-  refinement_history: Array<{ stage: string; content: string }>;
+  refinement_history: Record<string, string[]>;
+  evaluation_history: Record<string, Array<{ stage: string; score: number; feedback: string }>>;
   final_accepted: Record<string, string>;
   token_cost: { tokens: number; estimated_usd: number };
 };

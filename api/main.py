@@ -8,9 +8,9 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
-from agent.demo_provider import ReplayProvider
+from agent.demo_provider import FIXTURES, SCENARIO_FIXTURES, ReplayProvider
 from agent.social_content_graph import ContentState, social_content_graph
-from demo_mode import DEMO_CONTEXT, DEMO_NOTICE
+from demo_mode import DEMO_NOTICE
 
 
 class Scenario(BaseModel):
@@ -20,7 +20,7 @@ class Scenario(BaseModel):
 
 
 class DemoRunRequest(BaseModel):
-    scenario_id: str = Field(default="customer-context")
+    scenario_id: str = Field(default="onboarding-saas")
 
 
 class DemoRunResponse(BaseModel):
@@ -30,17 +30,15 @@ class DemoRunResponse(BaseModel):
     initial_drafts: dict[str, str]
     persona_scores: dict[str, float]
     persona_feedback: str
-    refinement_history: list[dict[str, str]]
+    refinement_history: dict[str, list[str]]
+    evaluation_history: dict[str, list[dict[str, str | float]]]
     final_accepted: dict[str, str]
     token_cost: dict[str, float | int]
 
 
 SCENARIOS = [
-    Scenario(
-        id="customer-context",
-        label="Customer context to platform content",
-        context=DEMO_CONTEXT,
-    ),
+    Scenario(id=fixture.id, label=fixture.label, context=fixture.context)
+    for fixture in SCENARIO_FIXTURES
 ]
 
 app = FastAPI(title="PULSE Demo API", version="0.1.0")
@@ -70,8 +68,13 @@ def scenarios() -> list[Scenario]:
 
 @app.post("/api/demo/run", response_model=DemoRunResponse)
 def run_demo(request: DemoRunRequest) -> DemoRunResponse:
-    scenario = next((item for item in SCENARIOS if item.id == request.scenario_id), SCENARIOS[0])
-    state = ContentState(topic=scenario.context, provider=ReplayProvider())
+    scenario = next((item for item in SCENARIOS if item.id == request.scenario_id), None)
+    if scenario is None:
+        raise HTTPException(status_code=422, detail=f"unknown scenario_id: {request.scenario_id}")
+    state = ContentState(
+        topic=scenario.context,
+        provider=ReplayProvider(FIXTURES[scenario.id]),
+    )
     try:
         result = social_content_graph.invoke(state)
     except Exception as exc:
@@ -88,10 +91,6 @@ def run_demo(request: DemoRunRequest) -> DemoRunResponse:
         platform: content["post"] if isinstance(content, dict) else content
         for platform, content in result["final_content"].items()
     }
-    history = [
-        {"stage": "initial", "content": "\n".join(initial.values())},
-        {"stage": "refined", "content": "\n".join(final.values())},
-    ]
     scores = {
         platform: sum(item["score"] for item in feedback.values()) / len(feedback)
         for platform, feedback in result["persona_scores"].items()
@@ -107,7 +106,8 @@ def run_demo(request: DemoRunRequest) -> DemoRunResponse:
         initial_drafts=initial,
         persona_scores=scores,
         persona_feedback=feedback,
-        refinement_history=history,
+        refinement_history=result["refinement_history"],
+        evaluation_history=result["evaluation_history"],
         final_accepted=final,
         token_cost={
             "tokens": result.get("token_count", 0),

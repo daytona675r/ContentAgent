@@ -43,6 +43,8 @@ class ContentState:
         default_factory=dict
     )  # aggregated metrics per platform
 
+    evaluation_history: dict[str, list[dict[str, Any]]] = field(default_factory=dict)
+
     # Refinement tracking
     refinement_history: dict[str, list[str]] = field(
         default_factory=dict
@@ -68,6 +70,7 @@ class ContentState:
             "generated_content": self.generated_content,
             "persona_scores": self.persona_scores,
             "aggregated_scores": self.aggregated_scores,
+            "evaluation_history": self.evaluation_history,
             "refinement_history": self.refinement_history,
             "final_content": self.final_content,
         }
@@ -187,6 +190,7 @@ def generate_content_node(state: ContentState):
     # Initialize refinement history
     for platform in state.generated_content:
         state.refinement_history[platform] = [state.generated_content[platform]["post"]]
+        state.evaluation_history[platform] = []
     return state
 
 
@@ -208,6 +212,13 @@ def score_personas_node(state: ContentState):
             continue
         updated_scores[platform] = json_feedback
         state.persona_scores = updated_scores
+        state.evaluation_history.setdefault(platform, []).append(
+            {
+                "stage": "accepted" if state.refinement_loops[platform] else "initial",
+                "score": sum(item["score"] for item in json_feedback.values()) / len(json_feedback),
+                "feedback": "; ".join(item["feedback"] for item in json_feedback.values()),
+            }
+        )
     return state
 
 

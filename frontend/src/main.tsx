@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import { api, DemoRun, Scenario } from "./api";
 import "./style.css";
 
-function App() {
+export function App() {
   const [scenarios, setScenarios] = useState<Scenario[]>([]);
   const [selected, setSelected] = useState("customer-context");
   const [result, setResult] = useState<DemoRun>();
@@ -47,14 +47,19 @@ function App() {
   );
 }
 
-function Workflow({ result }: { result: DemoRun }) {
+export function Workflow({ result }: { result: DemoRun }) {
   return <>
-    <section className="context panel"><h2>Business context</h2><p>{result.scenario.context}</p></section>
-    <section className="panel"><h2>Initial platform drafts</h2><div className="grid">{Object.entries(result.initial_drafts).map(([platform, text]) => <article key={platform}><h3>{platform}</h3><p>{text}</p></article>)}</div></section>
-    <section className="panel"><h2>Platform evaluation scores</h2><div className="grid">{Object.entries(result.persona_scores).map(([platform, score]) => <article key={platform}><h3>{platform}</h3><strong>{score.toFixed(1)} / 10</strong></article>)}</div><p>{result.persona_feedback}</p></section>
-    <section className="panel"><h2>Refinement history</h2>{result.refinement_history.map((step) => <div className="step" key={step.stage}><span>{step.stage}</span><p>{step.content}</p></div>)}</section>
-    <section className="panel accepted"><h2>Final accepted content</h2>{Object.entries(result.final_accepted).map(([platform, text]) => <article key={platform}><h3>{platform}</h3><p>{text}</p></article>)}<small>{result.token_cost.tokens} simulated tokens · ${result.token_cost.estimated_usd.toFixed(2)} example cost</small></section>
+    <section className="context panel"><h2>Business context</h2><p>{result.scenario.context}</p><small>Fictional brief · authored replay data</small></section>
+    <section className="panel"><h2>Platform progression</h2><p className="muted">Each example shows the initial draft, the strategist&apos;s actionable critique, and the accepted refinement from the real graph trace.</p><div className="platforms">{Object.keys(result.initial_drafts).map((platform) => {
+      const history = result.refinement_history[platform] ?? [];
+      const evaluations = result.evaluation_history[platform] ?? [];
+      const initialEvaluation = evaluations[0];
+      const acceptedEvaluation = evaluations[evaluations.length - 1];
+      return <article className="platform" key={platform}><h3>{platform}</h3><div className="progression"><div><span>Initial draft · sample</span><p>{history[0]}</p></div><div><span>Evaluation · strategist</span><p>{initialEvaluation?.feedback}</p><strong>{initialEvaluation?.score.toFixed(1)} / 10</strong></div><div><span>Refined post · sample</span><p>{result.final_accepted[platform]}</p></div><div><span>Accepted score · replay</span><strong>{acceptedEvaluation?.score.toFixed(1)} / 10</strong><p>{acceptedEvaluation?.feedback}</p></div></div></article>;
+    })}</div></section>
+    <section className="panel accepted"><h2>Workflow trace</h2><p>{result.persona_feedback}</p><small>{result.token_cost.tokens} simulated tokens · ${result.token_cost.estimated_usd.toFixed(2)} example cost · no live AI calls</small></section>
   </>;
 }
 
-createRoot(document.getElementById("root")!).render(<StrictMode><App /></StrictMode>);
+const root = document.getElementById("root");
+if (root) createRoot(root).render(<StrictMode><App /></StrictMode>);

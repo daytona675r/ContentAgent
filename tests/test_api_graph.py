@@ -7,9 +7,8 @@ def test_api_uses_graph_and_reports_refinement_trace() -> None:
     payload = TestClient(main.app).post("/api/demo/run", json={}).json()
     assert payload["initial_drafts"]
     assert payload["final_accepted"]
-    assert payload["refinement_history"][0]["stage"] == "initial"
-    assert payload["refinement_history"][1]["stage"] == "refined"
-    assert all(score == 9.0 for score in payload["persona_scores"].values())
+    assert all(len(history) == 2 for history in payload["refinement_history"].values())
+    assert all(score == 9.2 for score in payload["persona_scores"].values())
 
 
 def test_malformed_demo_provider_is_explicit(monkeypatch) -> None:
