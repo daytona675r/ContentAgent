@@ -20,6 +20,39 @@ For each platform, inspect the **initial draft → strategist feedback and score
 
 > **What is real vs. simulated?** The public demo runs the actual FastAPI → LangGraph orchestration and evaluation/refinement branches. The `ReplayProvider` supplies **pre-authored, deterministic** example posts, feedback, and scores. No live LLM generates or judges these posts; displayed token/cost values are illustrative. No OpenAI, Google, or Tavily credentials are needed.
 
+## Core capabilities — beyond the public demo
+
+The original PULSE application combines **two LangGraph workflows**: one to establish business and market context, and one to turn that context into evaluated social content. These broader capabilities are implemented in the original Streamlit/model-backed code; **the public React demo intentionally exercises only the Social Content Graph with fictional inputs and replayed provider responses**.
+
+### 1. Business Insights Graph — build the context
+
+The [Business Insights Graph](src/agent/businessinsightsGraph.py) supports the research stage of the original application:
+
+1. **Ingest business information** from a pitch deck or business description (PDF/text), or content extracted from a website in the [Streamlit insights UI](src/ui/insights.py).
+2. **Extract structured business context** with an LLM: product, target audience, customer problem, industry, and positioning.
+3. **Generate research questions** around customer pain points, trends, competitors, and potential content angles.
+4. **Gather and synthesize external insights** using Tavily searches scoped to Reddit, Quora, X/Twitter, and Hacker News, then summarize the findings with an LLM.
+5. **Store business input and insight summaries in Chroma** for retrieval and reuse when developing content topics.
+
+The purpose is to ground downstream writing in a specific business and audience, rather than generating generic marketing copy. This research workflow requires external API credentials and is **not run by the public demo**.
+
+### 2. Social Content Graph — generate, judge, refine
+
+The [Social Content Graph](src/agent/social_content_graph.py) turns a selected topic and available business insights into distinct drafts for **X/Twitter, LinkedIn, Facebook, and Instagram**. It then validates structured provider responses, evaluates each platform's draft, aggregates evaluation scores, and conditionally refines low-scoring content. Revised posts are **re-evaluated**, with drafts, scores, feedback, and accepted outputs kept in the graph state.
+
+In the **model-backed implementation**, the [evaluation prompt](src/agent/prompts.py) asks an LLM to judge the content from **four complementary personas**:
+
+| Evaluator | What it examines |
+| --- | --- |
+| **Social Media Strategist** | Hook, clarity, engagement potential, platform fit, brand alignment |
+| **Target Customer** | Relevance to pain points, clarity of value, usefulness |
+| **Industry Expert** | Domain accuracy, credibility, quality of insights |
+| **Investor** | Business relevance, professionalism, market potential |
+
+Each perspective is intended to return a score and actionable feedback; the graph can aggregate those scores and use the feedback to guide refinement. The current graph limits retries to **one refinement pass per platform**.
+
+**Demo scope:** the deployed `ReplayProvider` supplies **one fictional strategist evaluation per platform**, with deterministic draft → feedback → revised post → accepted score. The four-persona, live-LLM judging path and Business Insights Graph remain in the original codebase; they are **not verified by the public hosted demonstration**.
+
 ## Architecture
 
 **React + TypeScript (Vite)** → **FastAPI** → **LangGraph** → **pluggable provider**
